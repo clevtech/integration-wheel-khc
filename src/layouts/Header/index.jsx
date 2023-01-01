@@ -1,11 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import {
+    Box,
     Button,
     Center,
     Container,
     Flex,
-    Link as ChakraUILink,
+    IconButton,
     Menu,
     MenuButton,
     MenuList,
@@ -24,19 +25,23 @@ export default function Header() {
     const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
     return (
-        <Container maxWidth='100%' padding='0'>
+        <Box as='header'>
             <Container
                 maxWidth='100%'
                 height='12px'
                 background='greenKhc.100'
             />
             <Container maxWidth='container.xl'>
-                <Flex alignItems='center'>
-                    <Center width='60px' height='60px'>
-                        <ChakraUILink href='https://khc.kz/' isExternal>
-                            <KazakhstanHousingCompany color='greenKhc.100' />
-                        </ChakraUILink>
-                    </Center>
+                <Flex alignItems='center' paddingY='16px'>
+                    <IconButton
+                        as='a'
+                        href='https://khc.kz/'
+                        aria-label='khc-icon-button'
+                        icon={<KazakhstanHousingCompany color='greenKhc.100' />}
+                        variant='ghost'
+                        _hover={{ background: 'none' }}
+                        _focus={{ background: 'none' }}
+                    />
                     <Spacer />
                     <Menu isLazy>
                         <MenuButton
@@ -49,7 +54,7 @@ export default function Header() {
                             _expanded={{ background: 'yellowKhc.200' }}
                             _focus={{ background: 'yellowKhc.200' }}
                         >
-                            <Text as='b'>{selectedLanguage}</Text>
+                            <Text>{selectedLanguage}</Text>
                         </MenuButton>
                         <MenuList>
                             {languages.map((language, index) => (
@@ -63,6 +68,6 @@ export default function Header() {
                     </Menu>
                 </Flex>
             </Container>
-        </Container>
+        </Box>
     );
 }
