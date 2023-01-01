@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
     Button,
@@ -8,54 +8,57 @@ import {
     Link as ChakraUILink,
     Menu,
     MenuButton,
-    MenuItem,
     MenuList,
     Spacer,
     Text,
 } from '@chakra-ui/react';
 import { BiDownArrowAlt } from 'react-icons/bi';
 
+import CustomizedMenuItem from '../../components/Header/CustomizedMenuItem';
+
 import { KazakhstanHousingCompany } from '../../assets/icons/KazakhstanHousingCompany';
 
 export default function Header() {
-    const [selectedLanguage, setSelectedLanguage] = useState('KZ');
+    const languages = ['KZ', 'EN', 'RU'];
+
+    const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
     return (
         <Container maxWidth='100%' padding='0'>
-            <Container maxWidth='100%' height='12px' background='green.600' />
+            <Container
+                maxWidth='100%'
+                height='12px'
+                background='greenKhc.100'
+            />
             <Container maxWidth='container.xl'>
                 <Flex alignItems='center'>
                     <Center width='60px' height='60px'>
                         <ChakraUILink href='https://khc.kz/' isExternal>
-                            <KazakhstanHousingCompany color='green.600' />
+                            <KazakhstanHousingCompany color='greenKhc.100' />
                         </ChakraUILink>
                     </Center>
                     <Spacer />
-                    <Menu>
+                    <Menu isLazy>
                         <MenuButton
                             as={Button}
-                            colorScheme='yellow'
                             rightIcon={<BiDownArrowAlt />}
+                            color='white'
+                            background='yellowKhc.100'
+                            transition='all 0.5s'
+                            _hover={{ background: 'yellowKhc.200' }}
+                            _expanded={{ background: 'yellowKhc.200' }}
+                            _focus={{ background: 'yellowKhc.200' }}
                         >
-                            <Text>{selectedLanguage}</Text>
+                            <Text as='b'>{selectedLanguage}</Text>
                         </MenuButton>
                         <MenuList>
-                            <MenuItem
-                                value={'KZ'}
-                                onClick={(e) =>
-                                    setSelectedLanguage(e.target.value)
-                                }
-                            >
-                                KZ
-                            </MenuItem>
-                            <MenuItem
-                                value={'RU'}
-                                onClick={(e) =>
-                                    setSelectedLanguage(e.target.value)
-                                }
-                            >
-                                RU
-                            </MenuItem>
+                            {languages.map((language, index) => (
+                                <CustomizedMenuItem
+                                    key={index}
+                                    language={language}
+                                    onClick={setSelectedLanguage}
+                                />
+                            ))}
                         </MenuList>
                     </Menu>
                 </Flex>
