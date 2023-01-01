@@ -25,4 +25,4 @@ To set up a Integration Wheel application, you will need to have Node.js and npm
 * `cd integration-wheel-khc`
 * `npm install`
 * `npm run dev` (for development)
-* `npm run build`(for production)
+* `npm run build` (for production)
