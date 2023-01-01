@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import Header from './components/Header';
+import Header from './layouts/Header';
 
 export default function App() {
     return (
