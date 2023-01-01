@@ -16,7 +16,7 @@ export default function CustomizedMenuItem({ language, onClick }) {
             onMouseEnter={() => setMenuItemColor('white')}
             onMouseLeave={() => setMenuItemColor('black')}
         >
-            <Text as='b'>{language}</Text>
+            <Text>{language}</Text>
         </MenuItem>
     );
 }
