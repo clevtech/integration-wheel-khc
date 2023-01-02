@@ -13,7 +13,7 @@ import {
     Spacer,
     Text,
 } from '@chakra-ui/react';
-import { BiDownArrowAlt } from 'react-icons/bi';
+import { FaLanguage } from 'react-icons/fa';
 
 import CustomizedMenuItem from '../../components/Header/CustomizedMenuItem';
 
@@ -46,7 +46,7 @@ export default function Header() {
                     <Menu isLazy>
                         <MenuButton
                             as={Button}
-                            rightIcon={<BiDownArrowAlt />}
+                            rightIcon={<FaLanguage />}
                             color='white'
                             background='yellowKhc.100'
                             transition='all 0.5s'
