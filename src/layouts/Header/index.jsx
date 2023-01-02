@@ -25,14 +25,20 @@ export default function Header() {
 
     return (
         <Box as='header'>
-            <Container maxWidth='100%' height='12px' background='brand.green' />
+            <Container
+                maxWidth='100%'
+                height='12px'
+                background='brand.green.500'
+            />
             <Container maxWidth='container.xl'>
                 <Flex alignItems='center' paddingY='16px'>
                     <IconButton
                         as='a'
                         href='https://khc.kz/'
                         aria-label='khc-icon-button'
-                        icon={<KazakhstanHousingCompany color='brand.green' />}
+                        icon={
+                            <KazakhstanHousingCompany color='brand.green.500' />
+                        }
                         variant='ghost'
                         _hover={{ background: 'none' }}
                         _focus={{ background: 'none' }}
@@ -43,11 +49,11 @@ export default function Header() {
                             as={Button}
                             rightIcon={<FaLanguage />}
                             color='white'
-                            background='brand.yellow'
+                            background='brand.yellow.500'
                             transition='all 0.5s'
-                            _hover={{ background: 'brand.hover.yellow' }}
-                            _expanded={{ background: 'brand.hover.yellow' }}
-                            _focus={{ background: 'brand.hover.yellow' }}
+                            _hover={{ background: 'brand.yellow.600' }}
+                            _expanded={{ background: 'brand.yellow.600' }}
+                            _focus={{ background: 'brand.yellow.600' }}
                         >
                             <Text>{selectedLanguage}</Text>
                         </MenuButton>

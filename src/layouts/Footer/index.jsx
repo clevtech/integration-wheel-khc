@@ -45,7 +45,7 @@ export default function Footer() {
     ];
 
     return (
-        <Box as='footer' maxWidth='100%' background='brand.green'>
+        <Box as='footer' maxWidth='100%' background='brand.green.500'>
             <Container maxWidth='container.xl' color='white'>
                 <Stack
                     direction={{
@@ -103,11 +103,11 @@ export default function Footer() {
                                 size='lg'
                                 variant='ghost'
                                 _focus={{
-                                    background: 'brand.hover.yellow',
+                                    background: 'brand.yellow.600',
                                     border: 'none',
                                 }}
                                 _hover={{
-                                    background: 'brand.hover.yellow',
+                                    background: 'brand.yellow.600',
                                     border: 'none',
                                 }}
                             />
