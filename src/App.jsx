@@ -4,15 +4,17 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 
+import Login from './routes/Login';
+
 const theme = extendTheme({
     colors: {
-        yellowKhc: {
-            100: '#D3B961',
-            200: '#C9A11C',
-        },
-        greenKhc: {
-            100: '#17794D',
-            200: '#075431',
+        brand: {
+            yellow: '#D3B961',
+            green: '#17794D',
+            hover: {
+                yellow: '#C9A11C',
+                green: '#075431',
+            },
         },
     },
 });

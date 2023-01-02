@@ -9,9 +9,9 @@ export default function CustomizedMenuItem({ language, onClick }) {
         <MenuItem
             value={language}
             color={menuItemColor}
-            _hover={{ background: 'yellowKhc.200' }}
-            _expanded={{ background: 'yellowKhc.200' }}
-            _focus={{ background: 'yellowKhc.200' }}
+            _hover={{ background: 'brand.hover.yellow' }}
+            _expanded={{ background: 'brand.hover.yellow' }}
+            _focus={{ background: 'brand.hover.yellow' }}
             onClick={(e) => onClick(e.target.value)}
             onMouseEnter={() => setMenuItemColor('white')}
             onMouseLeave={() => setMenuItemColor('black')}
