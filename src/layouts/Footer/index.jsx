@@ -7,10 +7,11 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
+import { IoLogoVk, IoLogoInstagram, IoLogoFacebook } from 'react-icons/io5';
 
+import Cookies from '../../components/Overlay/Cookies';
 import { Baiterek } from '../../assets/icons/Baiterek';
 import { KazakhstanHousingCompany } from '../../assets/icons/KazakhstanHousingCompany';
-import { FaVk, FaInstagram, FaFacebookF } from 'react-icons/fa';
 
 export default function Footer() {
     const companyLinks = [
@@ -30,22 +31,23 @@ export default function Footer() {
         {
             label: 'facebook-icon-button',
             href: 'https://facebook.com/khc.kz/',
-            icon: <FaFacebookF />,
+            icon: <IoLogoFacebook />,
         },
         {
             label: 'instagram-icon-button',
             href: 'https://instagram.com/khc.kz/',
-            icon: <FaInstagram />,
+            icon: <IoLogoInstagram />,
         },
         {
             label: 'vk-icon-button',
             href: 'https://vk.com/khc_kz',
-            icon: <FaVk />,
+            icon: <IoLogoVk />,
         },
     ];
 
     return (
         <Box as='footer' maxWidth='100%' background='brand.green.500'>
+            <Cookies />
             <Container maxWidth='container.xl' color='white'>
                 <Stack
                     direction={{

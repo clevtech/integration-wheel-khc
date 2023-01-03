@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
     Box,
     Button,
@@ -8,20 +6,33 @@ import {
     IconButton,
     Menu,
     MenuButton,
+    MenuItem,
     MenuList,
     Spacer,
     Text,
 } from '@chakra-ui/react';
-import { FaLanguage } from 'react-icons/fa';
-
-import CustomizedMenuItem from '../../components/Header/CustomizedMenuItem';
+import { IoChevronDownOutline } from 'react-icons/io5';
 
 import { KazakhstanHousingCompany } from '../../assets/icons/KazakhstanHousingCompany';
+import { useLanguage } from '../../context/languageContext';
 
 export default function Header() {
-    const languages = ['KZ', 'EN', 'RU'];
+    const language = useLanguage();
 
-    const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+    const menuItems = [
+        {
+            label: 'Қазақша',
+            value: 'kz',
+        },
+        {
+            label: 'English',
+            value: 'en',
+        },
+        {
+            label: 'Русский',
+            value: 'ru',
+        },
+    ];
 
     return (
         <Box as='header'>
@@ -47,23 +58,30 @@ export default function Header() {
                     <Menu isLazy>
                         <MenuButton
                             as={Button}
-                            rightIcon={<FaLanguage />}
                             color='white'
                             background='brand.yellow.500'
                             transition='all 0.5s'
+                            rightIcon={<IoChevronDownOutline />}
                             _hover={{ background: 'brand.yellow.600' }}
                             _expanded={{ background: 'brand.yellow.600' }}
                             _focus={{ background: 'brand.yellow.600' }}
                         >
-                            <Text>{selectedLanguage}</Text>
+                            <Text>{language.state.toUpperCase()}</Text>
                         </MenuButton>
                         <MenuList>
-                            {languages.map((language, index) => (
-                                <CustomizedMenuItem
+                            {menuItems.map((menuItem, index) => (
+                                <MenuItem
                                     key={index}
-                                    language={language}
-                                    onClick={setSelectedLanguage}
-                                />
+                                    value={menuItem.value}
+                                    onClick={(e) => {
+                                        language.dispatch({
+                                            type: 'setLanguage',
+                                            payload: e.target.value,
+                                        });
+                                    }}
+                                >
+                                    <Text>{menuItem.label}</Text>
+                                </MenuItem>
                             ))}
                         </MenuList>
                     </Menu>
