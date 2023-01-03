@@ -1,30 +1,34 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import {
     Button,
     Modal,
     ModalBody,
     ModalFooter,
     ModalHeader,
-    ModalCloseButton,
     ModalContent,
     ModalOverlay,
     Text,
-    useDisclosure,
 } from '@chakra-ui/react';
 
-export default function Cookies() {
-    const { isOpen, onOpen, onClose } = useDisclosure(true);
+import { useAgreement } from '../../context/agreementContext';
 
-    useEffect(() => {
-        onOpen();
-    }, []);
+export default function Cookies() {
+    const { isAgreed, handleAgreement } = useAgreement();
+
+    const [isOpen, setIsOpen] = useState(isAgreed ? false : true);
+
+
+    const onClose = () => {
+        setIsOpen(false);
+
+        handleAgreement();
+    };
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Мы используем cookie</ModalHeader>
-                <ModalCloseButton />
                 <ModalBody>
                     <Text>
                         Наш сайт использует файлы cookie чтобы предоставлять
