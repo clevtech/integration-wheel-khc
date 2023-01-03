@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { IoLogoVk, IoLogoInstagram, IoLogoFacebook } from 'react-icons/io5';
 
-import Cookies from '../../components/Overlay/Cookies';
 import { Baiterek } from '../../assets/icons/Baiterek';
 import { KazakhstanHousingCompany } from '../../assets/icons/KazakhstanHousingCompany';
 
@@ -47,7 +46,6 @@ export default function Footer() {
 
     return (
         <Box as='footer' maxWidth='100%' background='brand.green.500'>
-            <Cookies />
             <Container maxWidth='container.xl' color='white'>
                 <Stack
                     direction={{
