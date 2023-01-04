@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const LanguageContext = createContext();
 
@@ -13,6 +14,10 @@ const languageReducer = (state, action) => {
 
 const LanguageProvider = ({ children }) => {
     const [state, dispatch] = useReducer(languageReducer, 'kz');
+
+    const [cookies, setCookie] = useCookies(['language']);
+
+    const [language, setLanguage] = useState(cookies.language || 'kz');
 
     const value = { state, dispatch };
 
