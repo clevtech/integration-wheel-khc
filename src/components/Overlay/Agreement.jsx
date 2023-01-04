@@ -12,11 +12,10 @@ import {
 
 import { useAgreement } from '../../context/agreementContext';
 
-export default function Cookies() {
+export default function Agreement() {
     const { isAgreed, handleAgreement } = useAgreement();
 
     const [isOpen, setIsOpen] = useState(isAgreed ? false : true);
-
 
     const onClose = () => {
         setIsOpen(false);

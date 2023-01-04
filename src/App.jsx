@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import Cookies from './components/Overlay/Cookies';
+import Agreement from './components/Overlay/Agreement';
 
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
@@ -19,7 +19,7 @@ export default function App() {
             <ChakraProvider theme={theme}>
                 <LanguageProvider>
                     <AgreementProvider>
-                        <Cookies />
+                        <Agreement />
                         <Header />
                         <Routes>
                             <Route path='/' element={<SignIn />} />
