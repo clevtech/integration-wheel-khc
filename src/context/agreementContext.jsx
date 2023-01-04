@@ -5,6 +5,7 @@ const AgreementContext = createContext();
 
 const AgreementProvider = ({ children }) => {
     const [cookies, setCookie] = useCookies(['isAgreed']);
+
     const [isAgreed, setIsAgreed] = useState(cookies.isAgreed || false);
 
     const handleAgreement = () => {
