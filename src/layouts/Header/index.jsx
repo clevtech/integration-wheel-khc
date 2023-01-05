@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
     Box,
     Button,
@@ -12,11 +13,14 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { IoChevronDownOutline } from 'react-icons/io5';
+import { useTranslation } from 'react-i18next';
 
 import { KazakhstanHousingCompany } from '../../assets/icons/KazakhstanHousingCompany';
 import { useLanguage } from '../../context/languageContext';
 
 export default function Header() {
+    const { i18n } = useTranslation();
+
     const { language, handleLanguage } = useLanguage();
 
     const menuItems = [
@@ -33,6 +37,10 @@ export default function Header() {
             value: 'ru',
         },
     ];
+
+    useEffect(() => {
+        i18n.changeLanguage(language);
+    }, [language]);
 
     return (
         <Box as='header'>
