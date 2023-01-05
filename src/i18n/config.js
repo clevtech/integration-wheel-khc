@@ -6,7 +6,6 @@ import kazakhLanguage from './locales/kz/translations.json';
 import russianLanguage from './locales/ru/translations.json';
 
 i18n.use(initReactI18next).init({
-    lng: 'kz',
     resources: {
         en: {
             translations: englishLanguage,
