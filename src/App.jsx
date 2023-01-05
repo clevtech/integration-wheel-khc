@@ -2,10 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import Agreement from './components/Overlay/Agreement';
-
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
-
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 
