@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import Agreement from './components/Overlay/Agreement';
+import Layout from './layouts';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import SignIn from './routes/SignIn';
@@ -19,8 +20,10 @@ export default function App() {
     const [cookies] = useCookies(['language']);
 
     useEffect(() => {
-        i18n.language !== cookies.language && i18n.changeLanguage(cookies.language);
-    }), [];
+        i18n.language !== cookies.language &&
+            i18n.changeLanguage(cookies.language);
+    }),
+        [];
 
     return (
         <BrowserRouter>
@@ -30,10 +33,15 @@ export default function App() {
                         <AgreementProvider>
                             <Agreement />
                             <Header />
-                            <Routes>
-                                <Route path='/' element={<SignIn />} />
-                                <Route path='/sign-up' element={<SignUp />} />
-                            </Routes>
+                            <Layout>
+                                <Routes>
+                                    <Route path='/' element={<SignIn />} />
+                                    <Route
+                                        path='/sign-up'
+                                        element={<SignUp />}
+                                    />
+                                </Routes>
+                            </Layout>
                             <Footer />
                         </AgreementProvider>
                     </LanguageProvider>
