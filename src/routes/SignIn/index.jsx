@@ -46,7 +46,7 @@ export default function SignIn() {
                     >
                         <Text>У вас нет аккаунта?</Text>
                         <Button variant='link' color='brand.green.500'>
-                            <Link to='sign-up'>Зарегистрируйтесь</Link>
+                            <Link to='/sign-up'>Зарегистрируйтесь</Link>
                         </Button>
                     </Stack>
                 </Stack>
