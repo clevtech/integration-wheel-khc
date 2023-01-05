@@ -1,25 +1,28 @@
-import { createContext, useContext, useReducer, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
 const LanguageContext = createContext();
 
-const languageReducer = (state, action) => {
-    switch (action.type) {
-        case 'setLanguage':
-            return action.payload;
-        default:
-            throw new Error(`Unhandled action type: ${action.type}`);
-    }
-};
-
 const LanguageProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(languageReducer, 'kz');
-
     const [cookies, setCookie] = useCookies(['language']);
 
     const [language, setLanguage] = useState(cookies.language || 'kz');
 
-    const value = { state, dispatch };
+    const handleLanguage = (language) => {
+        setLanguage(language);
+
+        setCookie('language', language, {
+            path: '/',
+            expires: new Date(Date.now() + 31536000000),
+            maxAge: 31536000000,
+            domain: 'localhost',
+            secure: false,
+            httpOnly: false,
+            sameSite: 'lax',
+        });
+    };
+
+    const value = { language, handleLanguage };
 
     return (
         <LanguageContext.Provider value={value}>

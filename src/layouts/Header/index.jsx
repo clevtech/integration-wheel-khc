@@ -17,7 +17,7 @@ import { KazakhstanHousingCompany } from '../../assets/icons/KazakhstanHousingCo
 import { useLanguage } from '../../context/languageContext';
 
 export default function Header() {
-    const language = useLanguage();
+    const { language, handleLanguage } = useLanguage();
 
     const menuItems = [
         {
@@ -66,7 +66,7 @@ export default function Header() {
                             _expanded={{ background: 'brand.yellow.600' }}
                             _focus={{ background: 'brand.yellow.600' }}
                         >
-                            <Text>{language.state.toUpperCase()}</Text>
+                            <Text>{language.toUpperCase()}</Text>
                         </MenuButton>
                         <MenuList>
                             {menuItems.map((menuItem, index) => (
@@ -74,10 +74,7 @@ export default function Header() {
                                     key={index}
                                     value={menuItem.value}
                                     onClick={(e) => {
-                                        language.dispatch({
-                                            type: 'setLanguage',
-                                            payload: e.target.value,
-                                        });
+                                        handleLanguage(e.target.value);
                                     }}
                                 >
                                     <Text>{menuItem.label}</Text>
