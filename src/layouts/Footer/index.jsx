@@ -97,7 +97,7 @@ export default function Footer() {
                     py='6'
                 >
                     <Text align='center'>{t('layouts.footer.copyright')}</Text>
-                    <ButtonGroup spacing='8px' variant='outline'>
+                    <ButtonGroup spacing='3' variant='outline'>
                         {socialLinks.map((link, index) => (
                             <IconButton
                                 key={index}
