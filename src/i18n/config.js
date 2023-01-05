@@ -1,15 +1,11 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import englishLanguage from './locales/en/translations.json';
 import kazakhLanguage from './locales/kz/translations.json';
 import russianLanguage from './locales/ru/translations.json';
 
 i18n.use(initReactI18next).init({
     resources: {
-        en: {
-            translations: englishLanguage,
-        },
         kz: {
             translations: kazakhLanguage,
         },
@@ -21,6 +17,6 @@ i18n.use(initReactI18next).init({
     defaultNS: 'translations',
 });
 
-i18n.languages = ['en', 'kz', 'ru'];
+i18n.languages = ['kz', 'ru'];
 
 export default i18n;
