@@ -6,7 +6,6 @@ import {
     Checkbox,
     Container,
     FormControl,
-    FormErrorMessage,
     FormLabel,
     Heading,
     HStack,
@@ -20,16 +19,18 @@ import {
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
 
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handleRememberMeChange = (e) => setRememberMe(e.target.checked);
 
     const handleSubmit = () => {
         if (email === '' || password === '') {
             return;
         }
 
-        console.log(email, password);
+        console.log(email, password, rememberMe);
     };
 
     return (
@@ -85,9 +86,7 @@ export default function SignIn() {
                         <HStack justify='space-between'>
                             <Checkbox
                                 aria-label='remember-me'
-                                onChange={(e) => {
-                                    console.log(e.target.checked);
-                                }}
+                                onChange={handleRememberMeChange}
                             >
                                 Запомнить
                             </Checkbox>
