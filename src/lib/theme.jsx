@@ -27,6 +27,7 @@ const theme = extendTheme({
                 800: '#0d432a',
                 900: '#0a3320',
             },
+            background: '#f8fafc',
         },
     },
 });
