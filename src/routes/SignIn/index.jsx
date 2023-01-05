@@ -1,13 +1,113 @@
-import { Box, Container, Stack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+    Box,
+    Button,
+    Checkbox,
+    Container,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Heading,
+    HStack,
+    Input,
+    Stack,
+    Text,
+    useBreakpointValue,
+} from '@chakra-ui/react';
 
+// TODO : add extended color scheme for checkbox, input and button
 export default function SignIn() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
+
+    const handleSubmit = () => {
+        if (email === '' || password === '') {
+            return;
+        }
+
+        console.log(email, password);
+    };
+
     return (
-        <Box>
-            <Container maxWidth='container.xl' py={{ base: '12' }}>
-                <Stack>
-                    
+        <Container maxWidth='container.sm'>
+            <Stack spacing='8'>
+                <Stack spacing='2' textAlign='center'>
+                    <Heading size='lg'>Войдите в ваш аккаунт</Heading>
+                    <Stack
+                        direction={{
+                            base: 'column',
+                            sm: 'row',
+                        }}
+                        justify='center'
+                    >
+                        <Text>У вас нет аккаунта?</Text>
+                        <Button variant='link' color='brand.green.500'>
+                            <Link to='sign-up'>Зарегистрируйтесь</Link>
+                        </Button>
+                    </Stack>
                 </Stack>
-            </Container>
-        </Box>
+                <Box
+                    py={{ base: '0', sm: '8' }}
+                    px={{ base: '4', sm: '12' }}
+                    background={useBreakpointValue({
+                        base: 'transparent',
+                        sm: 'white',
+                    })}
+                    boxShadow={{
+                        base: 'none',
+                        sm: 'md',
+                    }}
+                    borderRadius={{ base: 'none', sm: 'xl' }}
+                >
+                    <Stack spacing='6'>
+                        <Stack spacing='5'>
+                            <FormControl isRequired>
+                                <FormLabel>Электронная почта</FormLabel>
+                                <Input
+                                    type='email'
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                />
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel>Пароль</FormLabel>
+                                <Input
+                                    type='password'
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                />
+                            </FormControl>
+                        </Stack>
+                        <HStack justify='space-between'>
+                            <Checkbox
+                                aria-label='remember-me'
+                                onChange={(e) => {
+                                    console.log(e.target.checked);
+                                }}
+                            >
+                                Запомнить
+                            </Checkbox>
+                            <Button variant='link' color='brand.green.500'>
+                                Забыли пароль?
+                            </Button>
+                        </HStack>
+                        <Button
+                            variant='solid'
+                            color='white'
+                            background='brand.yellow.500'
+                            _focus={{ background: 'brand.yellow.600' }}
+                            _hover={{ background: 'brand.yellow.600' }}
+                            onClick={handleSubmit}
+                        >
+                            Войти
+                        </Button>
+                    </Stack>
+                </Box>
+            </Stack>
+        </Container>
     );
 }
