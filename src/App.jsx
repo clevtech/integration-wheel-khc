@@ -8,6 +8,7 @@ import Agreement from './components/Overlay/Agreement';
 import Layout from './layouts';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
+import Analytics from './routes/Analytics';
 import History from './routes/History';
 import Services from './routes/Services';
 import SignIn from './routes/SignIn';
@@ -39,6 +40,10 @@ export default function App() {
                                 <Header />
                                 <Layout>
                                     <Routes>
+                                        <Route
+                                            path='/analytics'
+                                            element={<Analytics />}
+                                        />
                                         <Route
                                             path='/history'
                                             element={<History />}
