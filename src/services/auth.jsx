@@ -1,8 +1,39 @@
-import { postRequest } from '../lib/axios';
+import { api } from '../lib/axios';
 
-const login = async (data) => {
-    const response = await postRequest('/auth/login', data);
-    return response;
+const auth = {
+    confirmRegistration: async (data, token) =>
+        api.request({
+            method: 'GET',
+            url: '/auth/confirm-registration',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }),
+
+    login: async (data) =>
+        api.request({
+            method: 'POST',
+            url: '/auth/login',
+            data: data,
+        }),
+
+    refresh: async (data, token) =>
+        api.request({
+            method: 'POST',
+            url: '/auth/refresh',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }),
+
+    register: async (data) =>
+        api.request({
+            method: 'POST',
+            url: '/auth/register',
+            data: data,
+        }),
 };
 
-export { login };
+export { auth };
