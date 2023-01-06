@@ -9,6 +9,7 @@ import Layout from './layouts';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import History from './routes/History';
+import Services from './routes/Services';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import i18n from './i18n/config';
@@ -41,6 +42,10 @@ export default function App() {
                                         <Route
                                             path='/history'
                                             element={<History />}
+                                        />
+                                        <Route
+                                            path='/services'
+                                            element={<Services />}
                                         />
                                         <Route path='/' element={<SignIn />} />
                                         <Route
