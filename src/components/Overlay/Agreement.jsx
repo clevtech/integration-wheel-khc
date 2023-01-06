@@ -38,11 +38,8 @@ export default function Agreement() {
                 </ModalBody>
                 <ModalFooter>
                     <Button
-                        color='white'
-                        background='brand.yellow.500'
+                        colorScheme='brand.yellow'
                         onClick={onClose}
-                        _hover={{ background: 'brand.yellow.600' }}
-                        _focus={{ background: 'brand.yellow.600' }}
                     >
                         ОК
                     </Button>
