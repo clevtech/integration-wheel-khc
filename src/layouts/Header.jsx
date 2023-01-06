@@ -1,4 +1,9 @@
-import { IoChevronDownOutline, IoPersonOutline } from 'react-icons/io5';
+import {
+    IoChevronDownOutline,
+    IoExitOutline,
+    IoPersonOutline,
+    IoSettingsOutline,
+} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -98,10 +103,13 @@ export default function Header() {
                                     <MenuGroup
                                         title={`${user.lastName} ${user.firstName}`}
                                     >
-                                        <MenuItem>
+                                        <MenuItem icon={<IoSettingsOutline />}>
                                             <Link to='settings'>Настройки</Link>
                                         </MenuItem>
-                                        <MenuItem onClick={handleSignOut}>
+                                        <MenuItem
+                                            icon={<IoExitOutline />}
+                                            onClick={handleSignOut}
+                                        >
                                             <Text>Выйти</Text>
                                         </MenuItem>
                                     </MenuGroup>
