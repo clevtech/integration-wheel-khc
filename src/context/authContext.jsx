@@ -1,72 +1,114 @@
 import { createContext, useContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useJwt } from 'react-jwt';
+import { decodeToken, isExpired } from 'react-jwt';
+import { useNavigate } from 'react-router-dom';
 
 import { login } from '../services/authApi';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['tokens', 'user']);
+    const navigate = useNavigate();
 
-    const [tokens, setTokens] = useState(cookies.tokens || {});
-    const [user, setUser] = useState(cookies.user || {});
+    const [cookies, setCookie, removeCookie] = useCookies([
+        'accessToken',
+        'refreshToken',
+        'user',
+    ]);
 
-    const handleSignIn = ({ email, password, rememberMe }) => {
-        login({ email, password }).then((response) => {
-            const { data } = response;
+    const [accessToken, setAccessToken] = useState(cookies.accessToken || null);
+    const [refreshToken, setRefreshToken] = useState(
+        cookies.refreshToken || null
+    );
+    const [user, setUser] = useState(cookies.user || null);
 
-            const { accessToken } = data;
+    const handleSignIn = async ({ email, password, rememberMe }) => {
+        const { data } = await login({ email, password });
 
-            const { decodedToken } = useJwt(accessToken);
+        const { accessToken, refreshToken } = data;
 
-            const { name } = decodedToken;
+        const decodedToken = decodeToken(accessToken);
 
-            const expirationInSeconds = rememberMe ? 31536000000 : 3600000;
+        const user = {
+            lastName: decodedToken.user.lastName,
+            firstName: decodedToken.user.firstName,
+            fatherName: decodedToken.user.fatherName,
+            email: decodedToken.user.email,
+            phoneNumber: decodedToken.user.phoneNumber,
+            role: decodedToken.role,
+        };
 
-            setTokens({ accessToken, refreshToken });
-            setUser({ name });
+        setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
+        setUser(user);
 
-            setCookie(
-                'tokens',
-                { accessToken },
-                {
-                    path: '/',
-                    expires: new Date(Date.now() + expirationInSeconds),
-                    maxAge: expirationInSeconds,
-                    domain: 'localhost',
-                    secure: false,
-                    httpOnly: false,
-                    sameSite: 'lax',
-                }
-            );
-            setCookie(
-                'user',
-                { name },
-                {
-                    path: '/',
-                    expires: new Date(Date.now() + expirationInSeconds),
-                    maxAge: expirationInSeconds,
-                    domain: 'localhost',
-                    secure: false,
-                    httpOnly: false,
-                    sameSite: 'lax',
-                }
-            );
-        });
+        const expirationInSeconds = rememberMe
+            ? 30 * 24 * 60 * 60
+            : 24 * 60 * 50;
+
+        setCookie(
+            'accessToken',
+            { accessToken },
+            {
+                path: '/',
+                expires: new Date(Date.now() + expirationInSeconds),
+                maxAge: expirationInSeconds,
+                domain: 'localhost',
+                secure: false,
+                httpOnly: false,
+                sameSite: 'lax',
+            }
+        );
+        setCookie(
+            'refreshToken',
+            { refreshToken },
+            {
+                path: '/',
+                expires: new Date(Date.now() + expirationInSeconds),
+                maxAge: expirationInSeconds,
+                domain: 'localhost',
+                secure: false,
+                httpOnly: false,
+                sameSite: 'lax',
+            }
+        );
+        setCookie(
+            'user',
+            { user },
+            {
+                path: '/',
+                expires: new Date(Date.now() + expirationInSeconds),
+                maxAge: expirationInSeconds,
+                domain: 'localhost',
+                secure: false,
+                httpOnly: false,
+                sameSite: 'lax',
+            }
+        );
     };
 
-    const handleSignUp = () => {
-        setTokens({});
-        setUser({});
+    const handleSignOut = () => {
+        setAccessToken(null);
+        setRefreshToken(null);
+        setUser(null);
 
-        removeCookie('tokens');
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
         removeCookie('user');
+
+        navigate('/');
     };
 
     const handleRefresh = () => {};
 
-    const value = { user, tokens, handleSignIn, handleSignUp, handleRefresh };
+    const value = {
+        user,
+        accessToken,
+        refreshToken,
+        handleSignIn,
+        handleSignOut,
+        handleRefresh,
+    };
 
     return (
         <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
