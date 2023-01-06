@@ -10,16 +10,9 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
-    const [cookies, setCookie, removeCookie] = useCookies([
-        'accessToken',
-        'refreshToken',
-        'user',
-    ]);
+    const [cookies, setCookie, removeCookie] = useCookies(['tokens', 'user']);
 
-    const [accessToken, setAccessToken] = useState(cookies.accessToken || null);
-    const [refreshToken, setRefreshToken] = useState(
-        cookies.refreshToken || null
-    );
+    const [tokens, setTokens] = useState(cookies.tokens || null);
     const [user, setUser] = useState(cookies.user || null);
 
     const handleSignIn = async ({ email, password, rememberMe }) => {
@@ -29,7 +22,7 @@ const AuthProvider = ({ children }) => {
 
         const decodedToken = decodeToken(accessToken);
 
-        const user = {
+        const userData = {
             lastName: decodedToken.user.lastName,
             firstName: decodedToken.user.firstName,
             fatherName: decodedToken.user.fatherName,
@@ -38,30 +31,16 @@ const AuthProvider = ({ children }) => {
             role: decodedToken.role,
         };
 
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
-        setUser(user);
+        setTokens({ accessToken, refreshToken });
+        setUser({ ...userData });
 
         const expirationInSeconds = rememberMe
             ? 30 * 24 * 60 * 60
             : 24 * 60 * 50;
 
         setCookie(
-            'accessToken',
-            { accessToken },
-            {
-                path: '/',
-                expires: new Date(Date.now() + expirationInSeconds),
-                maxAge: expirationInSeconds,
-                domain: 'localhost',
-                secure: false,
-                httpOnly: false,
-                sameSite: 'lax',
-            }
-        );
-        setCookie(
-            'refreshToken',
-            { refreshToken },
+            'tokens',
+            { accessToken, refreshToken },
             {
                 path: '/',
                 expires: new Date(Date.now() + expirationInSeconds),
@@ -74,7 +53,9 @@ const AuthProvider = ({ children }) => {
         );
         setCookie(
             'user',
-            { user },
+            {
+                ...userData,
+            },
             {
                 path: '/',
                 expires: new Date(Date.now() + expirationInSeconds),
@@ -90,12 +71,10 @@ const AuthProvider = ({ children }) => {
     };
 
     const handleSignOut = () => {
-        setAccessToken(null);
-        setRefreshToken(null);
+        setTokens(null);
         setUser(null);
 
-        removeCookie('accessToken');
-        removeCookie('refreshToken');
+        removeCookie('tokens');
         removeCookie('user');
 
         navigate('/');
@@ -105,8 +84,7 @@ const AuthProvider = ({ children }) => {
 
     const value = {
         user,
-        accessToken,
-        refreshToken,
+        tokens,
         handleSignIn,
         handleSignOut,
         handleRefresh,
