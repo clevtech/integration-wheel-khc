@@ -1,6 +1,7 @@
 import {
     IoChevronDownOutline,
     IoExitOutline,
+    IoListOutline,
     IoPersonOutline,
     IoSettingsOutline,
 } from 'react-icons/io5';
@@ -10,6 +11,12 @@ import {
     Box,
     Button,
     Container,
+    Drawer,
+    DrawerBody,
+    DrawerCloseButton,
+    DrawerContent,
+    DrawerHeader,
+    DrawerOverlay,
     Flex,
     IconButton,
     Menu,
@@ -18,7 +25,9 @@ import {
     MenuItem,
     MenuList,
     Spacer,
+    Stack,
     Text,
+    useDisclosure,
 } from '@chakra-ui/react';
 
 import { KazakhstanHousingCompany } from '../assets/icons/KazakhstanHousingCompany';
@@ -26,6 +35,7 @@ import { useAuth } from '../context/authContext';
 import { useLanguage } from '../context/languageContext';
 
 export default function Header() {
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const { i18n } = useTranslation();
 
     const { user, handleSignOut } = useAuth();
@@ -42,83 +52,129 @@ export default function Header() {
         },
     ];
 
+    const navLinks = [
+        {
+            label: 'Сервисы',
+            path: '/services',
+        },
+        {
+            label: 'История запросов',
+            path: '/history',
+        },
+    ];
+
     const handleLanguageChange = (value) => {
         handleLanguage(value);
         i18n.changeLanguage(value);
     };
 
     return (
-        <Box as='header' boxShadow='md'>
-            <Container
-                maxWidth='100%'
-                height='12px'
-                background='brand.green.500'
-            />
-            <Container maxWidth='container.xl'>
-                <Flex alignItems='center' paddingY='16px'>
-                    <IconButton
-                        as='a'
-                        href='https://khc.kz/'
-                        aria-label='khc-icon-button'
-                        icon={
-                            <KazakhstanHousingCompany color='brand.green.500' />
-                        }
-                        variant='ghost'
-                        _hover={{ background: 'none' }}
-                        _focus={{ background: 'none' }}
-                    />
-                    <Spacer />
-                    <Flex gap='2'>
-                        <Menu isLazy>
-                            <MenuButton
-                                as={Button}
+        <>
+            <Drawer isOpen={isOpen} placement='left' onClose={onClose}>
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerCloseButton />
+                    <DrawerHeader />
+                    <DrawerBody>
+                        <Stack
+                            align='flex-start'
+                            direction='column'
+                            spacing='4'
+                        >
+                            {navLinks.map((navLink, index) => (
+                                <Button
+                                    key={index}
+                                    colorScheme='brand.green'
+                                    variant='link'
+                                >
+                                    <Link to={navLink.path}>
+                                        {navLink.label}
+                                    </Link>
+                                </Button>
+                            ))}
+                        </Stack>
+                    </DrawerBody>
+                </DrawerContent>
+            </Drawer>
+            <Box as='header' boxShadow='md'>
+                <Container
+                    maxWidth='100%'
+                    height='12px'
+                    background='brand.green.500'
+                />
+                <Container maxWidth='container.xl'>
+                    <Flex alignItems='center' paddingY='16px'>
+                        {user ? (
+                            <IconButton
                                 colorScheme='brand.yellow'
-                                rightIcon={<IoChevronDownOutline />}
-                            >
-                                <Text>{language.toUpperCase()}</Text>
-                            </MenuButton>
-                            <MenuList>
-                                {menuItems.map((menuItem, index) => (
-                                    <MenuItem
-                                        key={index}
-                                        onClick={() => {
-                                            handleLanguageChange(
-                                                menuItem.value
-                                            );
-                                        }}
-                                    >
-                                        <Text>{menuItem.label}</Text>
-                                    </MenuItem>
-                                ))}
-                            </MenuList>
-                        </Menu>
-                        {user && (
+                                icon={<IoListOutline />}
+                                onClick={onOpen}
+                            />
+                        ) : (
+                            <IconButton
+                                as='a'
+                                href='https://khc.kz/'
+                                icon={<KazakhstanHousingCompany color='brand.green.500' />}
+                                variant='link'
+                            />
+                        )}
+                        <Spacer />
+                        <Flex gap='2'>
                             <Menu isLazy>
                                 <MenuButton
-                                    as={IconButton}
-                                    transition='all 0.5s'
-                                    icon={<IoPersonOutline />}
-                                />
+                                    as={Button}
+                                    colorScheme='brand.yellow'
+                                    rightIcon={<IoChevronDownOutline />}
+                                >
+                                    <Text>{language.toUpperCase()}</Text>
+                                </MenuButton>
                                 <MenuList>
-                                    <MenuGroup
-                                        title={`${user.lastName} ${user.firstName}`}
-                                    >
-                                        <MenuItem icon={<IoSettingsOutline />}>
-                                            <Link to='settings'>Настройки</Link>
-                                        </MenuItem>
+                                    {menuItems.map((menuItem, index) => (
                                         <MenuItem
-                                            icon={<IoExitOutline />}
-                                            onClick={handleSignOut}
+                                            key={index}
+                                            onClick={() => {
+                                                handleLanguageChange(
+                                                    menuItem.value
+                                                );
+                                            }}
                                         >
-                                            <Text>Выйти</Text>
+                                            <Text>{menuItem.label}</Text>
                                         </MenuItem>
-                                    </MenuGroup>
+                                    ))}
                                 </MenuList>
                             </Menu>
-                        )}
+                            {user && (
+                                <Menu isLazy>
+                                    <MenuButton
+                                        as={IconButton}
+                                        transition='all 0.5s'
+                                        icon={<IoPersonOutline />}
+                                    />
+                                    <MenuList>
+                                        <MenuGroup
+                                            title={`${user.lastName} ${user.firstName}`}
+                                        >
+                                            <MenuItem
+                                                icon={<IoSettingsOutline />}
+                                            >
+                                                <Link to='settings'>
+                                                    Настройки
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem
+                                                icon={<IoExitOutline />}
+                                                onClick={handleSignOut}
+                                            >
+                                                <Text>Выйти</Text>
+                                            </MenuItem>
+                                        </MenuGroup>
+                                    </MenuList>
+                                </Menu>
+                            )}
+                        </Flex>
                     </Flex>
-                </Flex>
-            </Container>
-        </Box>
+                </Container>
+            </Box>
+        </>
     );
 }
