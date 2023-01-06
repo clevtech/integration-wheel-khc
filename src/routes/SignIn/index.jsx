@@ -15,8 +15,12 @@ import {
     useBreakpointValue,
 } from '@chakra-ui/react';
 
+import { useAuth } from '../../context/authContext';
+
 // TODO : add extended color scheme for checkbox, input and button
 export default function SignIn() {
+    const { handleSignIn } = useAuth();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
@@ -30,7 +34,7 @@ export default function SignIn() {
             return;
         }
 
-        console.log(email, password, rememberMe);
+        handleSignIn({ email, password, rememberMe });
     };
 
     return (
