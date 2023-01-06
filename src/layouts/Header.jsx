@@ -63,7 +63,7 @@ export default function Header() {
         },
     ];
 
-    if (user) {
+    if (user.role === 'ADMIN') {
         navLinks = [
             ...navLinks,
             {
