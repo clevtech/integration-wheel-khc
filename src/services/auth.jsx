@@ -1,7 +1,7 @@
 import { api } from '../lib/axios';
 
 const auth = {
-    confirmRegistration: async (data, token) =>
+    confirm: async (data, token) =>
         api.request({
             method: 'GET',
             url: '/auth/confirm-registration',
