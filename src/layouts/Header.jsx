@@ -52,7 +52,7 @@ export default function Header() {
         },
     ];
 
-    const navLinks = [
+    let navLinks = [
         {
             label: 'Сервисы',
             path: '/services',
@@ -62,6 +62,24 @@ export default function Header() {
             path: '/history',
         },
     ];
+
+    if (user) {
+        navLinks = [
+            ...navLinks,
+            {
+                label: 'Аналитика',
+                path: '/analytics',
+            },
+            {
+                label: 'Пользователи',
+                path: '/users',
+            },
+            {
+                label: 'ЭЦП и токены',
+                path: '/tokens',
+            }
+        ]
+    }
 
     const handleLanguageChange = (value) => {
         handleLanguage(value);
@@ -79,7 +97,7 @@ export default function Header() {
                         <Stack
                             align='flex-start'
                             direction='column'
-                            spacing='4'
+                            spacing='6'
                         >
                             {navLinks.map((navLink, index) => (
                                 <Button
