@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { decodeToken, isExpired } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
 
-import { login } from '../services/authApi';
+import { login } from '../services/auth';
 
 export const AuthContext = createContext();
 
@@ -85,6 +85,8 @@ const AuthProvider = ({ children }) => {
                 sameSite: 'lax',
             }
         );
+
+        navigate('/services');
     };
 
     const handleSignOut = () => {
