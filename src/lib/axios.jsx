@@ -10,20 +10,24 @@ const apiClient = axios.create({
     withCredentials: true,
 });
 
-const getRequest = async (URL) => {
-    return apiClient.get(`/${URL}`).then((response) => response);
+const getRequest = async (url) => {
+    return apiClient.get(url).then((response) => response);
 };
 
-const postRequest = async (URL, payload) => {
-    return apiClient.post(`/${URL}`, payload).then((response) => response);
+const postRequest = async (url, payload) => {
+    return apiClient.post(url, payload).then((response) => response);
 };
 
-const patchRequest = async (URL, payload) => {
-    return apiClient.patch(`/${URL}`, payload).then((response) => response);
+const putRequest = async (url, payload) => {
+    return apiClient.put(url, payload).then((response) => response);
 };
 
-const deleteRequest = async (URL) => {
-    return apiClient.delete(`/${URL}`).then((response) => response);
+const patchRequest = async (url, payload) => {
+    return apiClient.patch(url, payload).then((response) => response);
 };
 
-export { getRequest, postRequest, patchRequest, deleteRequest };
+const deleteRequest = async (url) => {
+    return apiClient.delete(url).then((response) => response);
+};
+
+export { getRequest, postRequest, putRequest, patchRequest, deleteRequest };
