@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { decodeToken, isExpired } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
 
-import { login } from '../services/auth';
+import { auth } from '../services/auth';
 
 export const AuthContext = createContext();
 
@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(cookies.user || null);
 
     const handleSignIn = async ({ email, password, rememberMe }) => {
-        const { data } = await login({ email, password });
+        const { data } = await auth.login({ email, password });
 
         const { accessToken, refreshToken } = data;
 
