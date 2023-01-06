@@ -11,8 +11,8 @@ import {
     Text,
 } from '@chakra-ui/react';
 
-import { Baiterek } from '../../assets/icons/Baiterek';
-import { KazakhstanHousingCompany } from '../../assets/icons/KazakhstanHousingCompany';
+import { Baiterek } from '../assets/icons/Baiterek';
+import { KazakhstanHousingCompany } from '../assets/icons/KazakhstanHousingCompany';
 
 export default function Footer() {
     const { t } = useTranslation();

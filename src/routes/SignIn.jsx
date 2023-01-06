@@ -15,7 +15,7 @@ import {
     useBreakpointValue,
 } from '@chakra-ui/react';
 
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../context/authContext';
 
 // TODO : add extended color scheme for checkbox, input and button
 export default function SignIn() {

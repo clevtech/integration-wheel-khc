@@ -15,7 +15,7 @@ import {
     useBreakpointValue,
 } from '@chakra-ui/react';
 
-import { auth } from '../../services/auth';
+import { auth } from '../services/auth';
 
 export default function SignUp() {
     const navigate = useNavigate();
