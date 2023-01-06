@@ -7,6 +7,7 @@ import {
     IoTrashOutline,
 } from 'react-icons/io5';
 import {
+    Badge,
     Button,
     ButtonGroup,
     Card,
@@ -41,7 +42,7 @@ export default function ServiceCard({ service, user }) {
                     >
                         <Heading size='md'>{service.name}</Heading>
                         {!service.isActive && (
-                            <Button disabled>Архивный</Button>
+                            <Badge colorScheme='brand.yellow'>Архивный</Badge>
                         )}
                     </Stack>
                     <Stack
