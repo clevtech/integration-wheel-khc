@@ -1,8 +1,7 @@
-import { IoChevronDownOutline } from 'react-icons/io5';
+import { IoChevronDownOutline, IoPersonOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-    Avatar,
     Box,
     Button,
     Container,
@@ -10,6 +9,7 @@ import {
     IconButton,
     Menu,
     MenuButton,
+    MenuGroup,
     MenuItem,
     MenuList,
     Spacer,
@@ -67,13 +67,8 @@ export default function Header() {
                         <Menu isLazy>
                             <MenuButton
                                 as={Button}
-                                color='white'
-                                background='brand.yellow.500'
-                                transition='all 0.5s'
+                                colorScheme='brand.yellow'
                                 rightIcon={<IoChevronDownOutline />}
-                                _hover={{ background: 'brand.yellow.600' }}
-                                _expanded={{ background: 'brand.yellow.600' }}
-                                _focus={{ background: 'brand.yellow.600' }}
                             >
                                 <Text>{language.toUpperCase()}</Text>
                             </MenuButton>
@@ -97,21 +92,19 @@ export default function Header() {
                                 <MenuButton
                                     as={IconButton}
                                     transition='all 0.5s'
-                                    icon={
-                                        <Avatar
-                                            name='Yeren Kalibek'
-                                            background='brand.green.500'
-                                        />
-                                    }
-                                    isRound
+                                    icon={<IoPersonOutline />}
                                 />
                                 <MenuList>
-                                    <MenuItem>
-                                        <Link to='settings'>Настройки</Link>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleSignOut}>
-                                        <Text>Выйти</Text>
-                                    </MenuItem>
+                                    <MenuGroup
+                                        title={`${user.lastName} ${user.firstName}`}
+                                    >
+                                        <MenuItem>
+                                            <Link to='settings'>Настройки</Link>
+                                        </MenuItem>
+                                        <MenuItem onClick={handleSignOut}>
+                                            <Text>Выйти</Text>
+                                        </MenuItem>
+                                    </MenuGroup>
                                 </MenuList>
                             </Menu>
                         )}
