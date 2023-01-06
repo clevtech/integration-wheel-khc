@@ -163,8 +163,16 @@ export default function SignUp() {
                                 <FormLabel>Роль</FormLabel>
                                 <RadioGroup value={role} onChange={setRole}>
                                     <Stack direction='row'>
-                                        <Radio value='MANAGER'>Менеджер</Radio>
-                                        <Radio value='ADMIN'>
+                                        <Radio
+                                            value='MANAGER'
+                                            colorScheme='brand.yellow'
+                                        >
+                                            Менеджер
+                                        </Radio>
+                                        <Radio
+                                            value='ADMIN'
+                                            colorScheme='brand.yellow'
+                                        >
                                             Администратор
                                         </Radio>
                                     </Stack>
@@ -172,11 +180,7 @@ export default function SignUp() {
                             </FormControl>
                         </Stack>
                         <Button
-                            variant='solid'
-                            color='white'
-                            background='brand.yellow.500'
-                            _focus={{ background: 'brand.yellow.600' }}
-                            _hover={{ background: 'brand.yellow.600' }}
+                            colorScheme='brand.yellow'
                             onClick={handleSubmit}
                         >
                             Запросить разрешения
