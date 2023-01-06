@@ -26,9 +26,19 @@ export default function Services() {
         <Container maxWidth='container.xl'>
             <Stack spacing='4'>
                 {user.role === 'ADMIN' && (
-                    <ButtonGroup>
-                        <Button>hello</Button>
-                    </ButtonGroup>
+                    <Stack
+                        direction={{
+                            base: 'column',
+                            md: 'row',
+                        }}
+                    >
+                        <Button colorScheme='brand.yellow'>
+                            Добавить провайдер
+                        </Button>
+                        <Button colorScheme='brand.yellow'>
+                            Добавить сервис
+                        </Button>
+                    </Stack>
                 )}
                 <Stack direction='column'>
                     {services.map((service, index) => (

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import {
+    IoArchiveOutline,
     IoContractOutline,
+    IoDuplicateOutline,
     IoExpandOutline,
     IoPencilOutline,
     IoSaveOutline,
@@ -22,8 +24,6 @@ import {
 export default function ServiceCard({ service, user }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-
-    console.log(service);
 
     return (
         <Card variant='outline' width='100%'>
@@ -146,7 +146,13 @@ export default function ServiceCard({ service, user }) {
                                     <Text>петух</Text>
                                 </Stack>
                             )}
-                            <ButtonGroup justifyContent='flex-end'>
+                            <Stack
+                                direction={{
+                                    base: 'column',
+                                    md: 'row',
+                                }}
+                                justifyContent='flex-end'
+                            >
                                 {isEditing ? (
                                     <Button
                                         colorScheme='brand.green'
@@ -169,12 +175,24 @@ export default function ServiceCard({ service, user }) {
                                     </Button>
                                 )}
                                 <Button
+                                    colorScheme='brand.yellow'
+                                    leftIcon={<IoArchiveOutline />}
+                                >
+                                    Архивировать
+                                </Button>
+                                <Button
+                                    colorScheme='brand.yellow'
+                                    leftIcon={<IoDuplicateOutline />}
+                                >
+                                    Дублировать
+                                </Button>
+                                <Button
                                     colorScheme='brand.red'
                                     leftIcon={<IoTrashOutline />}
                                 >
                                     Удалить
                                 </Button>
-                            </ButtonGroup>
+                            </Stack>
                         </>
                     )}
                 </Stack>
