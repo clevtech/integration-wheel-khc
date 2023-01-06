@@ -100,10 +100,7 @@ export default function ServiceCard({ service, user }) {
                                                 Путь по API
                                             </Heading>
                                             <Stack direction='column'>
-                                                <Code
-                                                    colorScheme='brand.green'
-                                                    variant='solid'
-                                                >
+                                                <Code>
                                                     {service.systemPath}
                                                 </Code>
                                                 <Text>
@@ -112,10 +109,7 @@ export default function ServiceCard({ service, user }) {
                                                     сможете проверить результат
                                                     вашего запроса по команде:
                                                 </Text>
-                                                <Code
-                                                    colorScheme='brand.green'
-                                                    variant='solid'
-                                                >
+                                                <Code>
                                                     curl
                                                     http://192.168.0.172:8083/api/v1/tasks/
                                                     {'{'}transaction_id{'}'}
@@ -136,12 +130,7 @@ export default function ServiceCard({ service, user }) {
                                             <Heading size='sm'>
                                                 Пример запроса
                                             </Heading>
-                                            <Code
-                                                colorScheme='brand.green'
-                                                variant='solid'
-                                            >
-                                                {service.curlString}
-                                            </Code>
+                                            <Code>{service.curlString}</Code>
                                         </Stack>
                                     </CardBody>
                                 </Card>
