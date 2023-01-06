@@ -90,6 +90,7 @@ export default function SignIn() {
                         <HStack justify='space-between'>
                             <Checkbox
                                 aria-label='remember-me'
+                                colorScheme='brand.yellow'
                                 onChange={handleRememberMeChange}
                             >
                                 Запомнить
@@ -99,11 +100,7 @@ export default function SignIn() {
                             </Button>
                         </HStack>
                         <Button
-                            variant='solid'
-                            color='white'
-                            background='brand.yellow.500'
-                            _focus={{ background: 'brand.yellow.600' }}
-                            _hover={{ background: 'brand.yellow.600' }}
+                            colorScheme='brand.yellow'
                             onClick={handleSubmit}
                         >
                             Войти
