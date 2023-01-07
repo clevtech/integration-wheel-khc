@@ -10,6 +10,35 @@ const services = {
             },
         }),
 
+    getByUserId: async (token, id) =>
+        api.request({
+            method: 'GET',
+            url: `/provider_requests/${id}`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }),
+
+    permitByUserId: async (token, data) =>
+        api.request({
+            method: 'PUT',
+            url: `/provider_requests/permission/add`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }),
+
+    denyByUserId: async (token, data) =>
+        api.request({
+            method: 'PUT',
+            url: `/provider_requests/permission/remove`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }),
+
     create: async (token, data) =>
         api.request({
             method: 'POST',

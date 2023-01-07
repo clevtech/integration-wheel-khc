@@ -13,6 +13,7 @@ import History from './routes/History';
 import Services from './routes/Services';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
+import Users from './routes/Users';
 import i18n from './i18n/config';
 
 import { AgreementProvider } from './context/agreementContext';
@@ -56,6 +57,10 @@ export default function App() {
                                         <Route
                                             path='/sign-up'
                                             element={<SignUp />}
+                                        />
+                                        <Route
+                                            path='/users'
+                                            element={<Users />}
                                         />
                                     </Routes>
                                 </Layout>
