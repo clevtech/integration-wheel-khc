@@ -10,6 +10,16 @@ const users = {
             },
         }),
 
+    updateByToken: async (token, data) =>
+        api.request({
+            method: 'PUT',
+            url: '/users',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }),
+
     approveByUserId: async (token, id) =>
         api.request({
             method: 'GET',

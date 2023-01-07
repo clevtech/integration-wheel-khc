@@ -5,7 +5,7 @@ import {
     IoPersonOutline,
     IoSettingsOutline,
 } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     Box,
@@ -35,8 +35,9 @@ import { useAuth } from '../context/authContext';
 import { useLanguage } from '../context/languageContext';
 
 export default function Header() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const navigate = useNavigate();
     const { i18n } = useTranslation();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const { user, handleSignOut } = useAuth();
     const { language, handleLanguage } = useLanguage();
@@ -77,8 +78,8 @@ export default function Header() {
             {
                 label: 'ЭЦП и токены',
                 path: '/tokens',
-            }
-        ]
+            },
+        ];
     }
 
     const handleLanguageChange = (value) => {
@@ -132,7 +133,9 @@ export default function Header() {
                             <IconButton
                                 as='a'
                                 href='https://khc.kz/'
-                                icon={<KazakhstanHousingCompany color='brand.green.500' />}
+                                icon={
+                                    <KazakhstanHousingCompany color='brand.green.500' />
+                                }
                                 variant='link'
                             />
                         )}
@@ -173,11 +176,13 @@ export default function Header() {
                                             title={`${user.lastName} ${user.firstName}`}
                                         >
                                             <MenuItem
+                                                as='button'
                                                 icon={<IoSettingsOutline />}
+                                                onClick={() =>
+                                                    navigate('/settings')
+                                                }
                                             >
-                                                <Link to='settings'>
-                                                    Настройки
-                                                </Link>
+                                                Настройки
                                             </MenuItem>
                                             <MenuItem
                                                 icon={<IoExitOutline />}

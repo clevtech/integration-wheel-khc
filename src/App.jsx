@@ -11,6 +11,7 @@ import Header from './layouts/Header';
 import Analytics from './routes/Analytics';
 import History from './routes/History';
 import Services from './routes/Services';
+import Settings from './routes/Settings';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import Users from './routes/Users';
@@ -52,6 +53,10 @@ export default function App() {
                                         <Route
                                             path='/services'
                                             element={<Services />}
+                                        />
+                                        <Route
+                                            path='/settings'
+                                            element={<Settings />}
                                         />
                                         <Route path='/' element={<SignIn />} />
                                         <Route
