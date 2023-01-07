@@ -11,7 +11,6 @@ import {
 import {
     Badge,
     Button,
-    ButtonGroup,
     Card,
     CardBody,
     Code,
@@ -21,9 +20,23 @@ import {
     Text,
 } from '@chakra-ui/react';
 
+import { useAuth } from '../../context/authContext';
+import { services as servicesApi } from '../../services/services';
+
 export default function ServiceCard({ service, user }) {
+    const { tokens } = useAuth();
+
     const [isExpanded, setIsExpanded] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+
+    const handleArchive = () =>
+        servicesApi.archive(tokens.accessToken, service.id);
+
+    const handleDuplicate = () =>
+        servicesApi.duplicate(tokens.accessToken, service.id);
+
+    const handleDelete = () =>
+        servicesApi.delete(tokens.accessToken, service.id);
 
     return (
         <Card variant='outline' width='100%'>
@@ -177,18 +190,23 @@ export default function ServiceCard({ service, user }) {
                                 <Button
                                     colorScheme='brand.yellow'
                                     leftIcon={<IoArchiveOutline />}
+                                    onClick={handleArchive}
                                 >
-                                    Архивировать
+                                    {service.isActive
+                                        ? 'Архивировать'
+                                        : 'Восстановить'}
                                 </Button>
                                 <Button
                                     colorScheme='brand.yellow'
                                     leftIcon={<IoDuplicateOutline />}
+                                    onClick={handleDuplicate}
                                 >
                                     Дублировать
                                 </Button>
                                 <Button
                                     colorScheme='brand.red'
                                     leftIcon={<IoTrashOutline />}
+                                    onClick={handleDelete}
                                 >
                                     Удалить
                                 </Button>
