@@ -49,7 +49,7 @@ export default function UserCard({ user }) {
     }, []);
 
     return (
-        <Card variant='outline' width='100%'>
+        <Card variant='outline' width='100%' background='white'>
             <CardBody>
                 <Stack gap='4'>
                     <Stack

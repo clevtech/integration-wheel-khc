@@ -34,7 +34,7 @@ export default function TokenCard({ token }) {
     };
 
     return (
-        <Card variant='outline'>
+        <Card variant='outline' background='white'>
             <CardBody>
                 <Stack gap='4'>
                     <Stack
