@@ -33,12 +33,12 @@ export default function CreateProvider({ isOpen, onClose }) {
     };
 
     return (
-        <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Новый провайдер</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody pb={6}>
+                <ModalBody>
                     <FormControl>
                         <FormLabel>Название провайдера</FormLabel>
                         <Input
