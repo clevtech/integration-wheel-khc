@@ -69,22 +69,20 @@ export default function UserCard({ user }) {
                     >
                         <Stack align='center' direction='row' spacing='4'>
                             <Avatar />
-                            <Stack spacing='0'>
-                                <Text as='b'>{`${user.lastName} ${user.firstName}`}</Text>
-                                <Stack align='center' direction='row'>
-                                    {!user.isActivated ? (
-                                        <Badge colorScheme='brand.yellow'>
-                                            ждет подтверждения
-                                        </Badge>
-                                    ) : (
-                                        <Text>
-                                            {user.role.name === 'MANAGER'
-                                                ? 'Менеджер'
-                                                : 'Администратор'}
-                                        </Text>
-                                    )}
-                                </Stack>
-                            </Stack>
+                            <Text as='b'>
+                                {`${user.lastName} ${user.firstName}`}{' '}
+                                {!user.isActivated ? (
+                                    <Badge colorScheme='brand.yellow'>
+                                        ждет подтверждения
+                                    </Badge>
+                                ) : (
+                                    <Text>
+                                        {user.role.name === 'MANAGER'
+                                            ? 'Менеджер'
+                                            : 'Администратор'}
+                                    </Text>
+                                )}
+                            </Text>
                         </Stack>
                         <Button
                             colorScheme='brand.yellow'
