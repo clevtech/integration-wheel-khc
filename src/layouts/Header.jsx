@@ -125,7 +125,6 @@ export default function Header() {
                     <Flex alignItems='center' paddingY='16px'>
                         {user ? (
                             <IconButton
-                                colorScheme='brand.yellow'
                                 icon={<IoListOutline />}
                                 onClick={onOpen}
                             />
