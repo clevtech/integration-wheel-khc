@@ -58,7 +58,7 @@ export default function CreateToken({ isOpen, onClose }) {
             <ModalContent>
                 <ModalHeader>Новый ЭЦП/Токен</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody pb={6}>
+                <ModalBody>
                     <Stack spacing='4'>
                         <Stack
                             direction={{
