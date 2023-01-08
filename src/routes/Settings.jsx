@@ -97,7 +97,7 @@ export default function Settings() {
                             colorScheme='brand.yellow'
                             onClick={handleSubmit}
                         >
-                            Войти
+                            Изменить данные
                         </Button>
                     </Stack>
                 </Box>
