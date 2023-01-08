@@ -7,7 +7,6 @@ import {
 import {
     Badge,
     Button,
-    ButtonGroup,
     Card,
     CardBody,
     Divider,
@@ -49,15 +48,14 @@ export default function TokenCard({ token }) {
                         }}
                         spacing='4'
                     >
-                        <Heading size='md'>
-                            {token.name}{' '}
-                            <Badge colorScheme='brand.green' marginLeft='2'>
-                                {token?.certificate && token?.signature
-                                    ? 'ЭЦП'
-                                    : 'Токен'}
-                            </Badge>
-                        </Heading>
+                        <Heading size='md'>{token.name}</Heading>
+                        <Badge colorScheme='brand.yellow' marginLeft='2'>
+                            {token?.certificate && token?.signature
+                                ? 'Тип ключа: ЭЦП'
+                                : 'Тип ключа: Токен'}
+                        </Badge>
                     </Stack>
+
                     <Stack
                         align={{
                             base: 'flex-start',
@@ -85,7 +83,7 @@ export default function TokenCard({ token }) {
                                 }}
                                 spacing='4'
                             >
-                                <FormControl>
+                                <FormControl isRequired>
                                     <FormLabel>Название</FormLabel>
                                     <Input
                                         value={name}
@@ -94,7 +92,7 @@ export default function TokenCard({ token }) {
                                         }
                                     />
                                 </FormControl>
-                                <FormControl>
+                                <FormControl isRequired>
                                     <FormLabel>Описание</FormLabel>
                                     <Input
                                         value={description}
@@ -104,25 +102,39 @@ export default function TokenCard({ token }) {
                                     />
                                 </FormControl>
                             </Stack>
-                            <FormControl>
-                                <FormLabel>Сертификат</FormLabel>
-                                <Input
-                                    value={certificate}
-                                    onChange={(e) =>
-                                        setCertificate(e.target.value)
-                                    }
-                                />
-                            </FormControl>
-                            <FormControl>
-                                <FormLabel>Сигнатура</FormLabel>
-                                <Input
-                                    value={signature}
-                                    onChange={(e) =>
-                                        setSignature(e.target.value)
-                                    }
-                                />
-                            </FormControl>
-                            <FormControl>
+                            {token?.certificate && token?.signature ? (
+                                <>
+                                    <FormControl isRequired>
+                                        <FormLabel>Сертификат</FormLabel>
+                                        <Input
+                                            value={certificate}
+                                            onChange={(e) =>
+                                                setCertificate(e.target.value)
+                                            }
+                                        />
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                        <FormLabel>Сигнатура</FormLabel>
+                                        <Input
+                                            value={signature}
+                                            onChange={(e) =>
+                                                setSignature(e.target.value)
+                                            }
+                                        />
+                                    </FormControl>
+                                </>
+                            ) : (
+                                <FormControl isRequired>
+                                    <FormLabel>Токен</FormLabel>
+                                    <Input
+                                        value={tokenValue}
+                                        onChange={(e) =>
+                                            setTokenValue(e.target.value)
+                                        }
+                                    />
+                                </FormControl>
+                            )}
+                            <FormControl isRequired>
                                 <FormLabel>Активен до</FormLabel>
                                 <Input
                                     type='date'

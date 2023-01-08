@@ -67,17 +67,16 @@ export default function CreateToken({ isOpen, onClose }) {
                             }}
                             spacing='4'
                         >
-                            <FormControl>
+                            <FormControl isRequired>
                                 <FormLabel>Название</FormLabel>
                                 <Input
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </FormControl>
-                            <FormControl>
+                            <FormControl isRequired>
                                 <FormLabel>Тип</FormLabel>
                                 <Select
-                                    placeholder='Выберите тип'
                                     value={type}
                                     onChange={(e) => setType(e.target.value)}
                                 >
@@ -86,7 +85,7 @@ export default function CreateToken({ isOpen, onClose }) {
                                 </Select>
                             </FormControl>
                         </Stack>
-                        <FormControl>
+                        <FormControl isRequired>
                             <FormLabel>Описание</FormLabel>
                             <Input
                                 value={description}
@@ -95,7 +94,7 @@ export default function CreateToken({ isOpen, onClose }) {
                         </FormControl>
                         {type === 'eds' ? (
                             <>
-                                <FormControl>
+                                <FormControl isRequired>
                                     <FormLabel>Сертификат</FormLabel>
                                     <Input
                                         value={certificate}
@@ -104,7 +103,7 @@ export default function CreateToken({ isOpen, onClose }) {
                                         }
                                     />
                                 </FormControl>
-                                <FormControl>
+                                <FormControl isRequired>
                                     <FormLabel>Сигнатура</FormLabel>
                                     <Input
                                         value={signature}
@@ -115,7 +114,7 @@ export default function CreateToken({ isOpen, onClose }) {
                                 </FormControl>
                             </>
                         ) : (
-                            <FormControl>
+                            <FormControl isRequired>
                                 <FormLabel>Значение токена</FormLabel>
                                 <Input
                                     value={tokenValue}
@@ -125,7 +124,7 @@ export default function CreateToken({ isOpen, onClose }) {
                                 />
                             </FormControl>
                         )}
-                        <FormControl>
+                        <FormControl isRequired>
                             <FormLabel>Активен до</FormLabel>
                             <Input
                                 type='date'
