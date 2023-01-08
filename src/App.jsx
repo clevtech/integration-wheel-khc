@@ -14,6 +14,7 @@ import Services from './routes/Services';
 import Settings from './routes/Settings';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
+import Tokens from './routes/Tokens';
 import Users from './routes/Users';
 import i18n from './i18n/config';
 
@@ -62,6 +63,10 @@ export default function App() {
                                         <Route
                                             path='/sign-up'
                                             element={<SignUp />}
+                                        />
+                                        <Route
+                                            path='/tokens'
+                                            element={<Tokens />}
                                         />
                                         <Route
                                             path='/users'
