@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-    IoPencilOutline,
-    IoSaveOutline,
-    IoTrashOutline,
-} from 'react-icons/io5';
+import { IoPencilOutline, IoSaveOutline, IoTrashOutline } from 'react-icons/io5';
 import {
     Badge,
     Button,
@@ -29,7 +25,6 @@ export default function TokenCard({ token }) {
     const [expirationDate, setExpirationDate] = useState(token.expirationDate);
 
     const handleSave = () => {
-        console.log('save');
         setIsEditing(false);
     };
 
@@ -50,9 +45,7 @@ export default function TokenCard({ token }) {
                     >
                         <Heading size='md'>{token.name}</Heading>
                         <Badge colorScheme='brand.yellow' marginLeft='2'>
-                            {token?.certificate && token?.signature
-                                ? 'Тип ключа: ЭЦП'
-                                : 'Тип ключа: Токен'}
+                            {token?.certificate && token?.signature ? 'Тип ключа: ЭЦП' : 'Тип ключа: Токен'}
                         </Badge>
                     </Stack>
 
@@ -85,53 +78,28 @@ export default function TokenCard({ token }) {
                             >
                                 <FormControl isRequired>
                                     <FormLabel>Название</FormLabel>
-                                    <Input
-                                        value={name}
-                                        onChange={(e) =>
-                                            setName(e.target.value)
-                                        }
-                                    />
+                                    <Input value={name} onChange={(e) => setName(e.target.value)} />
                                 </FormControl>
                                 <FormControl isRequired>
                                     <FormLabel>Описание</FormLabel>
-                                    <Input
-                                        value={description}
-                                        onChange={(e) =>
-                                            setDescription(e.target.value)
-                                        }
-                                    />
+                                    <Input value={description} onChange={(e) => setDescription(e.target.value)} />
                                 </FormControl>
                             </Stack>
                             {token?.certificate && token?.signature ? (
                                 <>
                                     <FormControl isRequired>
                                         <FormLabel>Сертификат</FormLabel>
-                                        <Input
-                                            value={certificate}
-                                            onChange={(e) =>
-                                                setCertificate(e.target.value)
-                                            }
-                                        />
+                                        <Input value={certificate} onChange={(e) => setCertificate(e.target.value)} />
                                     </FormControl>
                                     <FormControl isRequired>
                                         <FormLabel>Сигнатура</FormLabel>
-                                        <Input
-                                            value={signature}
-                                            onChange={(e) =>
-                                                setSignature(e.target.value)
-                                            }
-                                        />
+                                        <Input value={signature} onChange={(e) => setSignature(e.target.value)} />
                                     </FormControl>
                                 </>
                             ) : (
                                 <FormControl isRequired>
                                     <FormLabel>Токен</FormLabel>
-                                    <Input
-                                        value={tokenValue}
-                                        onChange={(e) =>
-                                            setTokenValue(e.target.value)
-                                        }
-                                    />
+                                    <Input value={tokenValue} onChange={(e) => setTokenValue(e.target.value)} />
                                 </FormControl>
                             )}
                             <FormControl isRequired>
@@ -139,9 +107,7 @@ export default function TokenCard({ token }) {
                                 <Input
                                     type='date'
                                     value={expirationDate}
-                                    onChange={(e) =>
-                                        setExpirationDate(e.target.value)
-                                    }
+                                    onChange={(e) => setExpirationDate(e.target.value)}
                                 />
                             </FormControl>
                         </Stack>
@@ -155,11 +121,7 @@ export default function TokenCard({ token }) {
                             justifyContent='flex-end'
                         >
                             {isEditing ? (
-                                <Button
-                                    colorScheme='brand.green'
-                                    leftIcon={<IoSaveOutline />}
-                                    onClick={handleSave}
-                                >
+                                <Button colorScheme='brand.green' leftIcon={<IoSaveOutline />} onClick={handleSave}>
                                     Сохранить
                                 </Button>
                             ) : (
@@ -171,10 +133,7 @@ export default function TokenCard({ token }) {
                                     Редактировать
                                 </Button>
                             )}
-                            <Button
-                                colorScheme='brand.red'
-                                leftIcon={<IoTrashOutline />}
-                            >
+                            <Button colorScheme='brand.red' leftIcon={<IoTrashOutline />}>
                                 Удалить
                             </Button>
                         </Stack>

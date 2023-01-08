@@ -23,13 +23,9 @@ export default function CreateProvider({ isOpen, onClose }) {
     const [name, setName] = useState('');
 
     const handleSubmit = () => {
-        providersApi
-            .create(tokens.accessToken, {
-                name: name,
-            })
-            .then((response) => {
-                console.log(response);
-            });
+        providersApi.create(tokens.accessToken, {
+            name: name,
+        });
     };
 
     return (
@@ -41,20 +37,14 @@ export default function CreateProvider({ isOpen, onClose }) {
                 <ModalBody>
                     <FormControl>
                         <FormLabel>Название провайдера</FormLabel>
-                        <Input
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+                        <Input value={name} onChange={(e) => setName(e.target.value)} />
                     </FormControl>
                 </ModalBody>
 
                 <ModalFooter>
                     <Stack direction='row'>
                         <Button onClick={onClose}>Отмена</Button>
-                        <Button
-                            colorScheme='brand.yellow'
-                            onClick={handleSubmit}
-                        >
+                        <Button colorScheme='brand.yellow' onClick={handleSubmit}>
                             Создать
                         </Button>
                     </Stack>

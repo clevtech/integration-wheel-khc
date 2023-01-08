@@ -381,7 +381,6 @@ export default function Service() {
                                                                     const newHeaders = [...headers];
                                                                     newHeaders[index].key = e.target.value;
                                                                     setHeaders(newHeaders);
-                                                                    console.log(newHeaders);
                                                                 }}
                                                             />
                                                         </FormControl>
@@ -393,7 +392,6 @@ export default function Service() {
                                                                     const newHeaders = [...headers];
                                                                     newHeaders[index].value = e.target.value;
                                                                     setHeaders(newHeaders);
-                                                                    console.log(newHeaders);
                                                                 }}
                                                             />
                                                         </FormControl>
@@ -436,7 +434,6 @@ export default function Service() {
                                                                     const newPathVariables = [...pathVariables];
                                                                     newPathVariables[index].key = e.target.value;
                                                                     setPathVariables(newPathVariables);
-                                                                    console.log(newPathVariables);
                                                                 }}
                                                             />
                                                         </FormControl>
@@ -448,7 +445,6 @@ export default function Service() {
                                                                     const newPathVariables = [...pathVariables];
                                                                     newPathVariables[index].value = e.target.value;
                                                                     setPathVariables(newPathVariables);
-                                                                    console.log(newPathVariables);
                                                                 }}
                                                             />
                                                         </FormControl>
@@ -493,7 +489,6 @@ export default function Service() {
                                                                     const newPathParameters = [...pathParameters];
                                                                     newPathParameters[index].key = e.target.value;
                                                                     setPathParameters(newPathParameters);
-                                                                    console.log(newPathParameters);
                                                                 }}
                                                             />
                                                         </FormControl>
@@ -505,7 +500,6 @@ export default function Service() {
                                                                     const newPathParameters = [...pathParameters];
                                                                     newPathParameters[index].value = e.target.value;
                                                                     setPathParameters(newPathParameters);
-                                                                    console.log(newPathParameters);
                                                                 }}
                                                             />
                                                         </FormControl>

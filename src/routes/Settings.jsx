@@ -33,16 +33,12 @@ export default function Settings() {
 
         let data = {};
 
-        if (email && email !== user.email && email.length > 0)
-            data.email = email;
-        if (phoneNumber && phoneNumber !== user.phoneNumber)
-            data.phoneNumber = phoneNumber;
+        if (email && email !== user.email && email.length > 0) data.email = email;
+        if (phoneNumber && phoneNumber !== user.phoneNumber) data.phoneNumber = phoneNumber;
         if (password && password.length > 6) data.password = password;
 
         if (Object.keys(data).length > 0) {
-            usersApi.updateByToken(user.token, data).then((res) => {
-                console.log(res);
-            });
+            usersApi.updateByToken(user.token, data).then((res) => {});
         }
     };
 
@@ -69,34 +65,19 @@ export default function Settings() {
                         <Stack spacing='5'>
                             <FormControl isRequired>
                                 <FormLabel>Электронная почта</FormLabel>
-                                <Input
-                                    type='email'
-                                    value={email}
-                                    onChange={handleEmailChange}
-                                />
+                                <Input type='email' value={email} onChange={handleEmailChange} />
                             </FormControl>
                             <FormControl isRequired>
                                 <FormLabel>Номер телефона</FormLabel>
-                                <Input
-                                    type='tel'
-                                    value={phoneNumber}
-                                    onChange={handlePhoneNumberChange}
-                                />
+                                <Input type='tel' value={phoneNumber} onChange={handlePhoneNumberChange} />
                             </FormControl>
                             <FormControl isRequired>
                                 <FormLabel>Пароль</FormLabel>
-                                <Input
-                                    type='password'
-                                    value={password}
-                                    onChange={handlePasswordChange}
-                                />
+                                <Input type='password' value={password} onChange={handlePasswordChange} />
                             </FormControl>
                         </Stack>
 
-                        <Button
-                            colorScheme='brand.yellow'
-                            onClick={handleSubmit}
-                        >
+                        <Button colorScheme='brand.yellow' onClick={handleSubmit}>
                             Изменить данные
                         </Button>
                     </Stack>
