@@ -49,6 +49,16 @@ const services = {
             data,
         }),
 
+    generate: async (token, data) =>
+        api.request({
+            method: 'POST',
+            url: '/provider_requests/generate',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data,
+        }),
+
     archive: async (token, id) =>
         api.request({
             method: 'GET',

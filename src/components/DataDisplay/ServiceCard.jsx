@@ -15,7 +15,11 @@ import {
     CardBody,
     Code,
     Divider,
+    FormControl,
+    FormLabel,
     Heading,
+    Input,
+    Select,
     Stack,
     Text,
 } from '@chakra-ui/react';
@@ -29,6 +33,13 @@ export default function ServiceCard({ service, user }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
+    const [name, setName] = useState(service.name);
+    const [requestType, setRequestType] = useState(service.requestType);
+    const [requestMethod, setRequestMethod] = useState(service.requestMethod);
+    const [requestBody, setRequestBody] = useState(service.requestBody);
+    const [systemPath, setSystemPath] = useState(service.systemPath);
+    const [path, setPath] = useState(service.path);
+
     const handleArchive = () =>
         servicesApi.archive(tokens.accessToken, service.id);
 
@@ -39,7 +50,7 @@ export default function ServiceCard({ service, user }) {
         servicesApi.delete(tokens.accessToken, service.id);
 
     return (
-        <Card variant='outline' width='100%'>
+        <Card variant='outline' width='100%' background='white'>
             <CardBody>
                 <Stack gap='4'>
                     <Stack
@@ -155,8 +166,110 @@ export default function ServiceCard({ service, user }) {
                         <>
                             <Divider />
                             {isEditing && (
-                                <Stack>
-                                    <Text>петух</Text>
+                                <Stack spacing='4'>
+                                    <Stack
+                                        direction={{
+                                            base: 'column',
+                                            md: 'row',
+                                        }}
+                                    >
+                                        <FormControl isRequired width={{
+                                            base: '100%',
+                                            md: '50%',
+                                        }}>
+                                            <FormLabel>
+                                                Название сервиса
+                                            </FormLabel>
+                                            <Input
+                                                value={name}
+                                                onChange={(e) =>
+                                                    setName(e.target.value)
+                                                }
+                                            />
+                                        </FormControl>
+                                        <FormControl isRequired width={{
+                                            base: '100%',
+                                            md: '25%',
+                                        }}>
+                                            <FormLabel>
+                                                Тип содержания
+                                            </FormLabel>
+                                            <Select
+                                                value={requestType}
+                                                onChange={(e) =>
+                                                    setRequestType(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            >
+                                                <option value='JSON'>
+                                                    JSON
+                                                </option>
+                                                <option value='XML'>XML</option>
+                                            </Select>
+                                        </FormControl>
+                                        <FormControl isRequired width={{
+                                            base: '100%',
+                                            md: '25%',
+                                        }}>
+                                            <FormLabel>Метод запроса</FormLabel>
+                                            <Select
+                                                value={requestMethod}
+                                                onChange={(e) =>
+                                                    setRequestMethod(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            >
+                                                <option value='get'>GET</option>
+                                                <option value='post'>
+                                                    POST
+                                                </option>
+                                                <option value='put'>PUT</option>
+                                                <option value='delete'>
+                                                    DELETE
+                                                </option>
+                                            </Select>
+                                        </FormControl>
+                                    </Stack>
+                                    <Stack
+                                        direction={{
+                                            base: 'column',
+                                            md: 'row',
+                                        }}
+                                    >
+                                        <FormControl isRequired>
+                                            <FormLabel>Путь API</FormLabel>
+                                            <Input
+                                                value={path}
+                                                onChange={(e) =>
+                                                    setPath(e.target.value)
+                                                }
+                                            />
+                                        </FormControl>
+                                        <FormControl isRequired>
+                                            <FormLabel>
+                                                Путь API внутри системы
+                                            </FormLabel>
+                                            <Input
+                                                value={systemPath}
+                                                onChange={(e) =>
+                                                    setSystemPath(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            />
+                                        </FormControl>
+                                    </Stack>
+                                    <FormControl isRequired>
+                                        <FormLabel>Тело запроса</FormLabel>
+                                        <Input
+                                            value={requestBody}
+                                            onChange={(e) =>
+                                                setRequestBody(e.target.value)
+                                            }
+                                        />
+                                    </FormControl>
                                 </Stack>
                             )}
                             <Stack

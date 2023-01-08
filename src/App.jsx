@@ -10,6 +10,7 @@ import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Analytics from './routes/Analytics';
 import History from './routes/History';
+import Service from './routes/Service';
 import Services from './routes/Services';
 import Settings from './routes/Settings';
 import SignIn from './routes/SignIn';
@@ -50,6 +51,10 @@ export default function App() {
                                         <Route
                                             path='/history'
                                             element={<History />}
+                                        />
+                                        <Route
+                                            path='/services/create'
+                                            element={<Service />}
                                         />
                                         <Route
                                             path='/services'

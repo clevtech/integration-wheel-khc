@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { IoAddCircleOutline, IoBagAddOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import { Button, Container, Stack, useDisclosure } from '@chakra-ui/react';
 
 import ServiceCard from '../components/DataDisplay/ServiceCard';
@@ -8,6 +10,8 @@ import { useAuth } from '../context/authContext';
 import { services as servicesApi } from '../services/services';
 
 export default function Services() {
+    const navigate = useNavigate();
+
     const { tokens, user } = useAuth();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -16,6 +20,16 @@ export default function Services() {
     useEffect(() => {
         servicesApi.getAll(tokens.accessToken).then((response) => {
             let { data } = response;
+
+            data = data.sort((a, b) => {
+                if (a.isActive && !b.isActive) {
+                    return -1;
+                } else if (!a.isActive && b.isActive) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
 
             if (user.role === 'MANAGER') {
                 data = data.filter((service) => service.isActive);
@@ -34,13 +48,22 @@ export default function Services() {
                         <Stack
                             direction={{
                                 base: 'column',
-                                md: 'row',
+                                sm: 'row',
                             }}
+                            justify='flex-end'
                         >
-                            <Button colorScheme='brand.yellow' onClick={onOpen}>
+                            <Button
+                                colorScheme='brand.yellow'
+                                leftIcon={<IoBagAddOutline />}
+                                onClick={onOpen}
+                            >
                                 Добавить провайдер
                             </Button>
-                            <Button colorScheme='brand.yellow'>
+                            <Button
+                                colorScheme='brand.yellow'
+                                leftIcon={<IoAddCircleOutline />}
+                                onClick={() => navigate('create')}
+                            >
                                 Добавить сервис
                             </Button>
                         </Stack>
