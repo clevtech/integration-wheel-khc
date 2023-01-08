@@ -40,14 +40,11 @@ export default function ServiceCard({ service, user }) {
     const [systemPath, setSystemPath] = useState(service.systemPath);
     const [path, setPath] = useState(service.path);
 
-    const handleArchive = () =>
-        servicesApi.archive(tokens.accessToken, service.id);
+    const handleArchive = () => servicesApi.archive(tokens.accessToken, service.id);
 
-    const handleDuplicate = () =>
-        servicesApi.duplicate(tokens.accessToken, service.id);
+    const handleDuplicate = () => servicesApi.duplicate(tokens.accessToken, service.id);
 
-    const handleDelete = () =>
-        servicesApi.delete(tokens.accessToken, service.id);
+    const handleDelete = () => servicesApi.delete(tokens.accessToken, service.id);
 
     return (
         <Card variant='outline' width='100%' background='white'>
@@ -65,9 +62,7 @@ export default function ServiceCard({ service, user }) {
                         spacing='4'
                     >
                         <Heading size='md'>{service.name}</Heading>
-                        {!service.isActive && (
-                            <Badge colorScheme='brand.yellow'>Архивный</Badge>
-                        )}
+                        {!service.isActive && <Badge colorScheme='brand.yellow'>Архивный</Badge>}
                     </Stack>
                     <Stack
                         align={{
@@ -88,13 +83,7 @@ export default function ServiceCard({ service, user }) {
                         {user.role === 'MANAGER' && (
                             <Button
                                 colorScheme='brand.yellow'
-                                rightIcon={
-                                    isExpanded ? (
-                                        <IoContractOutline />
-                                    ) : (
-                                        <IoExpandOutline />
-                                    )
-                                }
+                                rightIcon={isExpanded ? <IoContractOutline /> : <IoExpandOutline />}
                                 onClick={() => {
                                     setIsExpanded(!isExpanded);
                                 }}
@@ -121,22 +110,15 @@ export default function ServiceCard({ service, user }) {
                                 >
                                     <CardBody>
                                         <Stack direction='column' spacing='4'>
-                                            <Heading size='sm'>
-                                                Путь по API
-                                            </Heading>
+                                            <Heading size='sm'>Путь по API</Heading>
                                             <Stack direction='column'>
-                                                <Code>
-                                                    {service.systemPath}
-                                                </Code>
+                                                <Code>http://193.106.99.147:32777{service.systemPath}</Code>
                                                 <Text>
-                                                    В ответе вы получите номер
-                                                    транзакции, по которому вы
-                                                    сможете проверить результат
-                                                    вашего запроса по команде:
+                                                    В ответе вы получите номер транзакции, по которому вы сможете
+                                                    проверить результат запросу на ссылку:
                                                 </Text>
                                                 <Code>
-                                                    curl
-                                                    http://192.168.0.172:8083/api/v1/tasks/
+                                                    http://193.106.99.147:32777/api/v1/tasks/
                                                     {'{'}transaction_id{'}'}
                                                 </Code>
                                             </Stack>
@@ -152,10 +134,13 @@ export default function ServiceCard({ service, user }) {
                                 >
                                     <CardBody>
                                         <Stack spacing='4'>
-                                            <Heading size='sm'>
-                                                Пример запроса
-                                            </Heading>
-                                            <Code>{service.curlString}</Code>
+                                            <Heading size='sm'>Пример запроса</Heading>
+                                            <Code>
+                                                {service.curlString.replace(
+                                                    '192.168.0.172:8083',
+                                                    '193.106.99.147:32777'
+                                                )}
+                                            </Code>
                                         </Stack>
                                     </CardBody>
                                 </Card>
@@ -173,62 +158,48 @@ export default function ServiceCard({ service, user }) {
                                             md: 'row',
                                         }}
                                     >
-                                        <FormControl isRequired width={{
-                                            base: '100%',
-                                            md: '50%',
-                                        }}>
-                                            <FormLabel>
-                                                Название сервиса
-                                            </FormLabel>
-                                            <Input
-                                                value={name}
-                                                onChange={(e) =>
-                                                    setName(e.target.value)
-                                                }
-                                            />
+                                        <FormControl
+                                            isRequired
+                                            width={{
+                                                base: '100%',
+                                                md: '50%',
+                                            }}
+                                        >
+                                            <FormLabel>Название сервиса</FormLabel>
+                                            <Input value={name} onChange={(e) => setName(e.target.value)} />
                                         </FormControl>
-                                        <FormControl isRequired width={{
-                                            base: '100%',
-                                            md: '25%',
-                                        }}>
-                                            <FormLabel>
-                                                Тип содержания
-                                            </FormLabel>
+                                        <FormControl
+                                            isRequired
+                                            width={{
+                                                base: '100%',
+                                                md: '25%',
+                                            }}
+                                        >
+                                            <FormLabel>Тип содержания</FormLabel>
                                             <Select
                                                 value={requestType}
-                                                onChange={(e) =>
-                                                    setRequestType(
-                                                        e.target.value
-                                                    )
-                                                }
+                                                onChange={(e) => setRequestType(e.target.value)}
                                             >
-                                                <option value='JSON'>
-                                                    JSON
-                                                </option>
+                                                <option value='JSON'>JSON</option>
                                                 <option value='XML'>XML</option>
                                             </Select>
                                         </FormControl>
-                                        <FormControl isRequired width={{
-                                            base: '100%',
-                                            md: '25%',
-                                        }}>
+                                        <FormControl
+                                            isRequired
+                                            width={{
+                                                base: '100%',
+                                                md: '25%',
+                                            }}
+                                        >
                                             <FormLabel>Метод запроса</FormLabel>
                                             <Select
                                                 value={requestMethod}
-                                                onChange={(e) =>
-                                                    setRequestMethod(
-                                                        e.target.value
-                                                    )
-                                                }
+                                                onChange={(e) => setRequestMethod(e.target.value)}
                                             >
                                                 <option value='get'>GET</option>
-                                                <option value='post'>
-                                                    POST
-                                                </option>
+                                                <option value='post'>POST</option>
                                                 <option value='put'>PUT</option>
-                                                <option value='delete'>
-                                                    DELETE
-                                                </option>
+                                                <option value='delete'>DELETE</option>
                                             </Select>
                                         </FormControl>
                                     </Stack>
@@ -240,35 +211,16 @@ export default function ServiceCard({ service, user }) {
                                     >
                                         <FormControl isRequired>
                                             <FormLabel>Путь API</FormLabel>
-                                            <Input
-                                                value={path}
-                                                onChange={(e) =>
-                                                    setPath(e.target.value)
-                                                }
-                                            />
+                                            <Input value={path} onChange={(e) => setPath(e.target.value)} />
                                         </FormControl>
                                         <FormControl isRequired>
-                                            <FormLabel>
-                                                Путь API внутри системы
-                                            </FormLabel>
-                                            <Input
-                                                value={systemPath}
-                                                onChange={(e) =>
-                                                    setSystemPath(
-                                                        e.target.value
-                                                    )
-                                                }
-                                            />
+                                            <FormLabel>Путь API внутри системы</FormLabel>
+                                            <Input value={systemPath} onChange={(e) => setSystemPath(e.target.value)} />
                                         </FormControl>
                                     </Stack>
                                     <FormControl isRequired>
                                         <FormLabel>Тело запроса</FormLabel>
-                                        <Input
-                                            value={requestBody}
-                                            onChange={(e) =>
-                                                setRequestBody(e.target.value)
-                                            }
-                                        />
+                                        <Input value={requestBody} onChange={(e) => setRequestBody(e.target.value)} />
                                     </FormControl>
                                 </Stack>
                             )}
@@ -305,9 +257,7 @@ export default function ServiceCard({ service, user }) {
                                     leftIcon={<IoArchiveOutline />}
                                     onClick={handleArchive}
                                 >
-                                    {service.isActive
-                                        ? 'Архивировать'
-                                        : 'Восстановить'}
+                                    {service.isActive ? 'Архивировать' : 'Восстановить'}
                                 </Button>
                                 <Button
                                     colorScheme='brand.yellow'
@@ -316,11 +266,7 @@ export default function ServiceCard({ service, user }) {
                                 >
                                     Дублировать
                                 </Button>
-                                <Button
-                                    colorScheme='brand.red'
-                                    leftIcon={<IoTrashOutline />}
-                                    onClick={handleDelete}
-                                >
+                                <Button colorScheme='brand.red' leftIcon={<IoTrashOutline />} onClick={handleDelete}>
                                     Удалить
                                 </Button>
                             </Stack>

@@ -527,7 +527,7 @@ export default function Service() {
                                             <Button
                                                 colorScheme='brand.yellow'
                                                 variant='outline'
-                                                disabled={Object.keys(treeModel).length === 0 ? true : false}
+                                                disabled={Object.keys(treeModel).length || requestMethod === 'GET' !== 0 ? false : true}
                                                 onClick={handleSubmit}
                                             >
                                                 Создать

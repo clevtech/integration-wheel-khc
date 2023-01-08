@@ -32,7 +32,7 @@ export default function Services() {
             });
 
             if (user.role === 'MANAGER') {
-                data = data.filter((service) => service.isActive);
+                data = data.filter((service) => service.isPermitted);
             }
 
             setServices(data);
@@ -52,11 +52,7 @@ export default function Services() {
                             }}
                             justify='flex-end'
                         >
-                            <Button
-                                colorScheme='brand.yellow'
-                                leftIcon={<IoBagAddOutline />}
-                                onClick={onOpen}
-                            >
+                            <Button colorScheme='brand.yellow' leftIcon={<IoBagAddOutline />} onClick={onOpen}>
                                 Добавить провайдер
                             </Button>
                             <Button
@@ -70,11 +66,7 @@ export default function Services() {
                     )}
                     <Stack direction='column'>
                         {services.map((service, index) => (
-                            <ServiceCard
-                                key={index}
-                                service={service}
-                                user={user}
-                            />
+                            <ServiceCard key={index} service={service} user={user} />
                         ))}
                     </Stack>
                 </Stack>
