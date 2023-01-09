@@ -1,10 +1,10 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 import jwtDecode from 'jwt-decode';
 
-import { auth } from '../services/auth';
+import { auth as authApi } from '../services/auth';
 
 export const AuthContext = createContext();
 
@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(cookies.user || null);
 
     const handleSignIn = async ({ email, password, rememberMe }) => {
-        const { data } = await auth.login({ email, password });
+        const { data } = await authApi.login({ email, password });
 
         const { accessToken, refreshToken } = data;
 
@@ -99,7 +99,45 @@ const AuthProvider = ({ children }) => {
         );
     };
 
-    const handleRefresh = () => {};
+    const handleRefresh = async () => {
+        const response = await authApi.refresh({ refreshToken: tokens.refreshToken });
+
+        console.log(response);
+
+        const { data } = response;
+
+        const { accessToken, refreshToken } = data;
+
+        if (response.status === 200) {
+            setTokens({ accessToken, refreshToken });
+
+            setCookie(
+                'tokens',
+                { accessToken, refreshToken },
+                {
+                    path: '/',
+                    expires: new Date(Date.now() + 30 * 24 * 60 * 60),
+                    maxAge: 30 * 24 * 60 * 60,
+                    domain: 'localhost',
+                    secure: false,
+                    httpOnly: false,
+                    sameSite: 'lax',
+                }
+            );
+        } else {
+            handleSignOut();
+        }
+    };
+
+    useEffect(() => {
+        let interval = setInterval(() => {
+            if (tokens) {
+                handleRefresh();
+            }
+        }, 55 * 60 * 1000);
+
+        return () => clearInterval(interval);
+    }, [tokens]);
 
     const value = {
         user,

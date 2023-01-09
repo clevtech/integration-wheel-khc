@@ -18,13 +18,10 @@ const auth = {
             data: data,
         }),
 
-    refresh: async (data, token) =>
+    refresh: async (data) =>
         api.request({
             method: 'POST',
             url: '/auth/refresh',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
             data: data,
         }),
 
