@@ -91,11 +91,13 @@ export default function Service() {
     const handleSubmit = () => {
         let editedPath = path;
 
-        if (editedPath.charAt(editedPath.length - 1 !== '/')) {
-            editedPath += '/';
-        }
+        if (pathVariables.length !== 0) {
+            if (editedPath.charAt(editedPath.length - 1 !== '/')) {
+                editedPath += '/';
+            }
 
-        editedPath = editedPath + pathVariables.map((pathVariable) => `{${pathVariable.key}}`).join('/');
+            editedPath = editedPath + pathVariables.map((pathVariable) => `{${pathVariable.key}}`).join('/');
+        }
 
         servicesApi
             .create(tokens.accessToken, {
@@ -521,7 +523,11 @@ export default function Service() {
                                             <Button
                                                 colorScheme='brand.yellow'
                                                 variant='outline'
-                                                disabled={Object.keys(treeModel).length || requestMethod === 'GET' !== 0 ? false : true}
+                                                disabled={
+                                                    Object.keys(treeModel).length || (requestMethod === 'GET') !== 0
+                                                        ? false
+                                                        : true
+                                                }
                                                 onClick={handleSubmit}
                                             >
                                                 Создать
