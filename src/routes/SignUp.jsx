@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -15,9 +15,16 @@ import {
     useBreakpointValue,
 } from '@chakra-ui/react';
 
+import { useAuth } from '../context/authContext';
 import { auth } from '../services/auth';
 
 export default function SignUp() {
+    const { user } = useAuth();
+
+    if (user) {
+        return <Navigate to='/services' />;
+    }
+
     const navigate = useNavigate();
 
     const [lastName, setLastName] = useState('');

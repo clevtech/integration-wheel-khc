@@ -17,6 +17,7 @@ import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import Tokens from './routes/Tokens';
 import Users from './routes/Users';
+import ProtectedRoute from './utils/ProtectedRoute';
 import i18n from './i18n/config';
 
 import { AgreementProvider } from './context/agreementContext';
@@ -28,8 +29,7 @@ export default function App() {
     const [cookies] = useCookies(['language']);
 
     useEffect(() => {
-        i18n.language !== cookies.language &&
-            i18n.changeLanguage(cookies.language);
+        i18n.language !== cookies.language && i18n.changeLanguage(cookies.language);
     }),
         [];
 
@@ -46,36 +46,61 @@ export default function App() {
                                     <Routes>
                                         <Route
                                             path='/analytics'
-                                            element={<Analytics />}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Analytics />
+                                                </ProtectedRoute>
+                                            }
                                         />
                                         <Route
                                             path='/history'
-                                            element={<History />}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <History />
+                                                </ProtectedRoute>
+                                            }
                                         />
                                         <Route
                                             path='/services/create'
-                                            element={<Service />}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Service />
+                                                </ProtectedRoute>
+                                            }
                                         />
                                         <Route
                                             path='/services'
-                                            element={<Services />}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Services />
+                                                </ProtectedRoute>
+                                            }
                                         />
                                         <Route
                                             path='/settings'
-                                            element={<Settings />}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Settings />
+                                                </ProtectedRoute>
+                                            }
                                         />
                                         <Route path='/' element={<SignIn />} />
-                                        <Route
-                                            path='/sign-up'
-                                            element={<SignUp />}
-                                        />
+                                        <Route path='/sign-up' element={<SignUp />} />
                                         <Route
                                             path='/tokens'
-                                            element={<Tokens />}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Tokens />
+                                                </ProtectedRoute>
+                                            }
                                         />
                                         <Route
                                             path='/users'
-                                            element={<Users />}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Users />
+                                                </ProtectedRoute>
+                                            }
                                         />
                                     </Routes>
                                 </Layout>

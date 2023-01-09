@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -19,7 +19,11 @@ import { useAuth } from '../context/authContext';
 
 // TODO : add extended color scheme for checkbox, input and button
 export default function SignIn() {
-    const { handleSignIn } = useAuth();
+    const { user, handleSignIn } = useAuth();
+
+    if (user) {
+        return <Navigate to='/services' />;
+    }
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
