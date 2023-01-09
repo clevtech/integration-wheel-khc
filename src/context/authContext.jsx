@@ -1,7 +1,8 @@
 import { createContext, useContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { decodeToken, isExpired } from 'react-jwt';
 import { useNavigate } from 'react-router-dom';
+
+import jwtDecode from 'jwt-decode';
 
 import { auth } from '../services/auth';
 
@@ -20,23 +21,21 @@ const AuthProvider = ({ children }) => {
 
         const { accessToken, refreshToken } = data;
 
-        const decodedToken = decodeToken(accessToken);
+        const decodedToken = jwtDecode(accessToken);
 
         const userData = {
-            lastName: decodedToken.user.lastName,
-            firstName: decodedToken.user.firstName,
-            fatherName: decodedToken.user.fatherName,
-            email: decodedToken.user.email,
-            phoneNumber: decodedToken.user.phoneNumber,
-            role: decodedToken.role,
+            lastName: decodedToken?.user.lastName,
+            firstName: decodedToken?.user.firstName,
+            fatherName: decodedToken?.user.fatherName,
+            email: decodedToken?.user.email,
+            phoneNumber: decodedToken?.user.phoneNumber,
+            role: decodedToken?.role,
         };
 
         setTokens({ accessToken, refreshToken });
         setUser({ ...userData });
 
-        const expirationInSeconds = rememberMe
-            ? 30 * 24 * 60 * 60
-            : 24 * 60 * 50;
+        const expirationInSeconds = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 50;
 
         setCookie(
             'tokens',
@@ -80,6 +79,26 @@ const AuthProvider = ({ children }) => {
         navigate('/');
     };
 
+    const handleProfileUpdate = (user) => {
+        const expirationInSeconds = 30 * 24 * 60 * 60;
+
+        setCookie(
+            'user',
+            {
+                ...user,
+            },
+            {
+                path: '/',
+                expires: new Date(Date.now() + expirationInSeconds),
+                maxAge: expirationInSeconds,
+                domain: 'localhost',
+                secure: false,
+                httpOnly: false,
+                sameSite: 'lax',
+            }
+        );
+    };
+
     const handleRefresh = () => {};
 
     const value = {
@@ -87,12 +106,11 @@ const AuthProvider = ({ children }) => {
         tokens,
         handleSignIn,
         handleSignOut,
+        handleProfileUpdate,
         handleRefresh,
     };
 
-    return (
-        <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 const useAuth = () => {
