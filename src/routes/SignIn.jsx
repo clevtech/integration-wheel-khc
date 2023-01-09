@@ -72,19 +72,11 @@ export default function SignIn() {
                         <Stack spacing='5'>
                             <FormControl isRequired>
                                 <FormLabel>Электронная почта</FormLabel>
-                                <Input
-                                    type='email'
-                                    value={email}
-                                    onChange={handleEmailChange}
-                                />
+                                <Input type='email' value={email} onChange={handleEmailChange} />
                             </FormControl>
                             <FormControl isRequired>
                                 <FormLabel>Пароль</FormLabel>
-                                <Input
-                                    type='password'
-                                    value={password}
-                                    onChange={handlePasswordChange}
-                                />
+                                <Input type='password' value={password} onChange={handlePasswordChange} />
                             </FormControl>
                         </Stack>
                         <HStack justify='space-between'>
@@ -99,10 +91,7 @@ export default function SignIn() {
                                 Забыли пароль?
                             </Button>
                         </HStack>
-                        <Button
-                            colorScheme='brand.yellow'
-                            onClick={handleSubmit}
-                        >
+                        <Button colorScheme='brand.yellow' onClick={handleSubmit}>
                             Войти
                         </Button>
                     </Stack>
