@@ -39,6 +39,21 @@ export default function Services() {
         });
     }, []);
 
+    const actions = {
+        onDelete: (id) => {
+            setServices((prev) => prev.filter((service) => service.id !== id));
+        },
+
+        onDuplicate: (id) => {
+            setServices((prev) => {
+                const service = prev.find((service) => service.id === id);
+                const newService = { ...service, id: null };
+
+                return [...prev, newService];
+            });
+        }
+    };
+
     return (
         <>
             <CreateProvider isOpen={isOpen} onClose={onClose} />
@@ -66,7 +81,7 @@ export default function Services() {
                     )}
                     <Stack direction='column'>
                         {services.map((service, index) => (
-                            <ServiceCard key={index} service={service} user={user} />
+                            <ServiceCard key={index} service={service} user={user} actions={actions} />
                         ))}
                     </Stack>
                 </Stack>

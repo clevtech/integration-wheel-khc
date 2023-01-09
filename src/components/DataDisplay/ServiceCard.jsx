@@ -22,12 +22,14 @@ import {
     Select,
     Stack,
     Text,
+    useToast,
 } from '@chakra-ui/react';
 
 import { useAuth } from '../../context/authContext';
 import { services as servicesApi } from '../../services/services';
 
-export default function ServiceCard({ service, user }) {
+export default function ServiceCard({ service, user, actions }) {
+    const toast = useToast();
     const { tokens } = useAuth();
 
     const [isExpanded, setIsExpanded] = useState(false);
@@ -40,11 +42,40 @@ export default function ServiceCard({ service, user }) {
     const [systemPath, setSystemPath] = useState(service.systemPath);
     const [path, setPath] = useState(service.path);
 
+    const [requestLanguage, setRequestLanguage] = useState('json');
+
     const handleArchive = () => servicesApi.archive(tokens.accessToken, service.id);
 
     const handleDuplicate = () => servicesApi.duplicate(tokens.accessToken, service.id);
 
-    const handleDelete = () => servicesApi.delete(tokens.accessToken, service.id);
+    const handleDelete = () => {
+        servicesApi
+            .delete(tokens.accessToken, service.id)
+            .then((res) => {
+                if (res.status === 204) {
+                    toast({
+                        title: 'Успешно',
+                        description: 'Услуга была успешно удалена',
+                        status: 'success',
+                        colorScheme: 'brand.green',
+                        duration: 5000,
+                        isClosable: true,
+                    });
+
+                    actions.onDelete(service.id);
+                }
+            })
+            .catch(() => {
+                toast({
+                    title: 'Ошибка',
+                    description: 'Не удалось удалить услугу',
+                    status: 'error',
+                    colorScheme: 'brand.red',
+                    duration: 5000,
+                    isClosable: true,
+                });
+            });
+    };
 
     return (
         <Card variant='outline' width='100%' background='white'>
@@ -135,12 +166,20 @@ export default function ServiceCard({ service, user }) {
                                     <CardBody>
                                         <Stack spacing='4'>
                                             <Heading size='sm'>Пример запроса</Heading>
-                                            <Code>
-                                                {service.curlString.replace(
-                                                    '192.168.0.172:8083',
-                                                    '193.106.99.147:32777'
-                                                )}
-                                            </Code>
+                                            <Select
+                                                onChange={(e) => {
+                                                    setRequestLanguage(e.target.value);
+                                                }}
+                                            >
+                                                <option value='json'>JSON</option>
+                                                <option value='xml'>XML</option>
+                                            </Select>
+                                            {requestLanguage === 'json' ? (
+                                                <Code>{service.curlJsonString}</Code>
+                                            ) : (
+                                                <Code>{service.curlXmlString}</Code>
+                                            )}
+                                            <Code>{service.requestParams}</Code>
                                         </Stack>
                                     </CardBody>
                                 </Card>
