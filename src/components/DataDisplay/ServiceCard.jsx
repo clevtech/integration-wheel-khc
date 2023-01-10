@@ -143,7 +143,7 @@ export default function ServiceCard({ service, user, actions }) {
                                         <Stack direction='column' spacing='4'>
                                             <Heading size='sm'>Путь по API</Heading>
                                             <Stack direction='column'>
-                                                <Code>http://193.106.99.147:32777{service.systemPath}</Code>
+                                                <Code>{service.systemPath}</Code>
                                                 <Text>
                                                     В ответе вы получите номер транзакции, по которому вы сможете
                                                     проверить результат запросу на ссылку:
@@ -175,11 +175,10 @@ export default function ServiceCard({ service, user, actions }) {
                                                 <option value='xml'>XML</option>
                                             </Select>
                                             {requestLanguage === 'json' ? (
-                                                <Code>{service.curlJsonString}</Code>
+                                                <Code>{service.curlJsonString.replace('192.168.0.172:8083', '193.106.99.147:32777')}</Code>
                                             ) : (
-                                                <Code>{service.curlXmlString}</Code>
+                                                <Code>{service.curlXmlString.replace('192.168.0.172:8083', '193.106.99.147:32777')}</Code>
                                             )}
-                                            <Code>{service.requestParams}</Code>
                                         </Stack>
                                     </CardBody>
                                 </Card>

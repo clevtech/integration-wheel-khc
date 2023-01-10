@@ -38,7 +38,7 @@ export default function Service() {
     const [description, setDescription] = useState('');
     const [contentType, setContentType] = useState('application/json');
     const [body, setBody] = useState('');
-    const [treeModel, setTreeModel] = useState({});
+    const [treeModel, setTreeModel] = useState('');
     const [requestMethod, setRequestMethod] = useState('GET');
     const [providerId, setProviderId] = useState();
     const [path, setPath] = useState('');
