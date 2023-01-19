@@ -149,7 +149,7 @@ export default function ServiceCard({ service, user, actions }) {
                                                     проверить результат запросу на ссылку:
                                                 </Text>
                                                 <Code>
-                                                    http://193.106.99.147:32777/api/v1/tasks/
+                                                    https://api.tahini.kz/api/v1/tasks/
                                                     {'{'}transaction_id{'}'}
                                                 </Code>
                                             </Stack>
