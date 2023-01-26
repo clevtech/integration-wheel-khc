@@ -175,9 +175,9 @@ export default function ServiceCard({ service, user, actions }) {
                                                 <option value='xml'>XML</option>
                                             </Select>
                                             {requestLanguage === 'json' ? (
-                                                <Code>{service.curlJsonString.replace('192.168.0.172:8083', '193.106.99.147:32777')}</Code>
+                                                <Code>{service.curlJsonString}</Code>
                                             ) : (
-                                                <Code>{service.curlXmlString.replace('192.168.0.172:8083', '193.106.99.147:32777')}</Code>
+                                                <Code>{service.curlXmlString}</Code>
                                             )}
                                         </Stack>
                                     </CardBody>
@@ -241,25 +241,6 @@ export default function ServiceCard({ service, user, actions }) {
                                             </Select>
                                         </FormControl>
                                     </Stack>
-                                    <Stack
-                                        direction={{
-                                            base: 'column',
-                                            md: 'row',
-                                        }}
-                                    >
-                                        <FormControl isRequired>
-                                            <FormLabel>Путь API</FormLabel>
-                                            <Input value={path} onChange={(e) => setPath(e.target.value)} />
-                                        </FormControl>
-                                        <FormControl isRequired>
-                                            <FormLabel>Путь API внутри системы</FormLabel>
-                                            <Input value={systemPath} onChange={(e) => setSystemPath(e.target.value)} />
-                                        </FormControl>
-                                    </Stack>
-                                    <FormControl isRequired>
-                                        <FormLabel>Тело запроса</FormLabel>
-                                        <Input value={requestBody} onChange={(e) => setRequestBody(e.target.value)} />
-                                    </FormControl>
                                 </Stack>
                             )}
                             <Stack
