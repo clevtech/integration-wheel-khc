@@ -111,7 +111,7 @@ export default function Service() {
                 edsId: '68b66cbd-61b4-4771-94e6-abb8a1225208',
                 providerId,
                 path: editedPath,
-                systemPath: 'https://api.clevtech.kz/',
+                systemPath: '...',
                 pathParameters,
                 pathVariables,
                 headers,
