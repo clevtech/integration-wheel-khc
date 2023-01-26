@@ -20,12 +20,12 @@ export default function Footer() {
     const companyLinks = [
         {
             label: 'baiterek-icon-button',
-            href: 'https://baiterek.gov.kz/',
+            href: '',
             icon: <Baiterek />,
         },
         {
             label: 'khc-icon-button',
-            href: 'https://khc.kz/',
+            href: '',
             icon: <KazakhstanHousingCompany />,
         },
     ];
@@ -33,17 +33,17 @@ export default function Footer() {
     const socialLinks = [
         {
             label: 'facebook-icon-button',
-            href: 'https://facebook.com/khc.kz/',
+            href: '',
             icon: <IoLogoFacebook />,
         },
         {
             label: 'instagram-icon-button',
-            href: 'https://instagram.com/khc.kz/',
+            href: '',
             icon: <IoLogoInstagram />,
         },
         {
             label: 'vk-icon-button',
-            href: 'https://vk.com/khc_kz',
+            href: '',
             icon: <IoLogoVk />,
         },
     ];

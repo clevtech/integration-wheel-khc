@@ -131,7 +131,7 @@ export default function Header() {
                         ) : (
                             <IconButton
                                 as='a'
-                                href='https://khc.kz/'
+                                href=''
                                 icon={
                                     <KazakhstanHousingCompany color='brand.green.500' />
                                 }
