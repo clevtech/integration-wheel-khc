@@ -14,7 +14,6 @@ import Service from './routes/Service';
 import Services from './routes/Services';
 import Settings from './routes/Settings';
 import SignIn from './routes/SignIn';
-import SignUp from './routes/SignUp';
 import Tokens from './routes/Tokens';
 import Users from './routes/Users';
 import ProtectedRoute from './utils/ProtectedRoute';
@@ -85,7 +84,6 @@ export default function App() {
                                             }
                                         />
                                         <Route path='/' element={<SignIn />} />
-                                        <Route path='/sign-up' element={<SignUp />} />
                                         <Route
                                             path='/tokens'
                                             element={
