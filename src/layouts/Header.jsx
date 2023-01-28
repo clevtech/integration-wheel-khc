@@ -76,6 +76,10 @@ export default function Header() {
                 path: '/users',
             },
             {
+                label: 'Журналы',
+                path: '/logs',
+            },
+            {
                 label: 'ЭЦП и токены',
                 path: '/tokens',
             },
