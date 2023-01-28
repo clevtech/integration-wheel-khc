@@ -9,156 +9,104 @@ import { auth as authApi } from '../services/auth';
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [cookies, setCookie, removeCookie] = useCookies(['tokens', 'user']);
+  const [cookies, setCookie, removeCookie] = useCookies(['tokens', 'user']);
 
-    const [tokens, setTokens] = useState(cookies.tokens || null);
-    const [user, setUser] = useState(cookies.user || null);
+  const [tokens, setTokens] = useState(cookies.tokens || null);
+  const [user, setUser] = useState(cookies.user || null);
 
-    const handleSignIn = async ({ email, password, rememberMe }) => {
-        const { data } = await authApi.login({ email, password });
+  const handleSignOut = () => {
+    setTokens(null);
+    setUser(null);
 
-        const { accessToken, refreshToken } = data;
+    removeCookie('tokens');
+    removeCookie('user');
 
-        const decodedToken = jwtDecode(accessToken);
+    navigate('/');
+  };
 
-        const userData = {
-            lastName: decodedToken?.user.lastName,
-            firstName: decodedToken?.user.firstName,
-            fatherName: decodedToken?.user.fatherName,
-            email: decodedToken?.user.email,
-            phoneNumber: decodedToken?.user.phoneNumber,
-            role: decodedToken?.role,
-        };
+  const handleProfileUpdate = (user) => {
+    const expirationInSeconds = 30 * 24 * 60 * 60;
 
-        setTokens({ accessToken, refreshToken });
-        setUser({ ...userData });
+    setCookie(
+      'user',
+      {
+        ...user,
+      },
+      {
+        path: '/',
+        expires: new Date(Date.now() + expirationInSeconds),
+        maxAge: expirationInSeconds,
+        domain: 'localhost',
+        secure: false,
+        httpOnly: false,
+        sameSite: 'lax',
+      }
+    );
+  };
 
-        const expirationInSeconds = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 50;
+  const handleRefresh = async () => {
+    const response = await authApi.refresh({ refreshToken: tokens.refreshToken });
 
-        setCookie(
-            'tokens',
-            { accessToken, refreshToken },
-            {
-                path: '/',
-                expires: new Date(Date.now() + expirationInSeconds),
-                maxAge: expirationInSeconds,
-                domain: 'localhost',
-                secure: false,
-                httpOnly: false,
-                sameSite: 'lax',
-            }
-        );
-        setCookie(
-            'user',
-            {
-                ...userData,
-            },
-            {
-                path: '/',
-                expires: new Date(Date.now() + expirationInSeconds),
-                maxAge: expirationInSeconds,
-                domain: 'localhost',
-                secure: false,
-                httpOnly: false,
-                sameSite: 'lax',
-            }
-        );
+    console.log(response);
 
-        navigate('/services');
-    };
+    const { data } = response;
 
-    const handleSignOut = () => {
-        setTokens(null);
-        setUser(null);
+    const { accessToken, refreshToken } = data;
 
-        removeCookie('tokens');
-        removeCookie('user');
+    if (response.status === 200) {
+      setTokens({ accessToken, refreshToken });
 
-        navigate('/');
-    };
-
-    const handleProfileUpdate = (user) => {
-        const expirationInSeconds = 30 * 24 * 60 * 60;
-
-        setCookie(
-            'user',
-            {
-                ...user,
-            },
-            {
-                path: '/',
-                expires: new Date(Date.now() + expirationInSeconds),
-                maxAge: expirationInSeconds,
-                domain: 'localhost',
-                secure: false,
-                httpOnly: false,
-                sameSite: 'lax',
-            }
-        );
-    };
-
-    const handleRefresh = async () => {
-        const response = await authApi.refresh({ refreshToken: tokens.refreshToken });
-
-        console.log(response);
-
-        const { data } = response;
-
-        const { accessToken, refreshToken } = data;
-
-        if (response.status === 200) {
-            setTokens({ accessToken, refreshToken });
-
-            setCookie(
-                'tokens',
-                { accessToken, refreshToken },
-                {
-                    path: '/',
-                    expires: new Date(Date.now() + 30 * 24 * 60 * 60),
-                    maxAge: 30 * 24 * 60 * 60,
-                    domain: 'localhost',
-                    secure: false,
-                    httpOnly: false,
-                    sameSite: 'lax',
-                }
-            );
-        } else {
-            handleSignOut();
+      setCookie(
+        'tokens',
+        { accessToken, refreshToken },
+        {
+          path: '/',
+          expires: new Date(Date.now() + 30 * 24 * 60 * 60),
+          maxAge: 30 * 24 * 60 * 60,
+          domain: 'localhost',
+          secure: false,
+          httpOnly: false,
+          sameSite: 'lax',
         }
-    };
+      );
+    } else {
+      handleSignOut();
+    }
+  };
 
-    useEffect(() => {
-        let interval = setInterval(() => {
-            if (tokens) {
-                handleRefresh();
-            }
-        }, 55 * 60 * 1000);
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (tokens) {
+        handleRefresh();
+      }
+    }, 55 * 60 * 1000);
 
-        return () => clearInterval(interval);
-    }, [tokens]);
+    return () => clearInterval(interval);
+  }, [tokens]);
 
-    const value = {
-        user,
-        tokens,
-        handleSignIn,
-        handleSignOut,
-        handleProfileUpdate,
-        handleRefresh,
-    };
+  const value = {
+    user,
+    tokens,
+    setUser,
+    setTokens,
+    handleSignOut,
+    handleProfileUpdate,
+    handleRefresh,
+  };
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 const useAuth = () => {
-    const context = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-    if (!context) {
-        throw new Error('useAuth must be used within a AuthProvider');
-    }
+  if (!context) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
 
-    return context;
+  return context;
 };
 
 export { AuthProvider, useAuth };
