@@ -96,7 +96,7 @@ export default function Footer() {
                     justify='space-between'
                     py='6'
                 >
-                    <Text align='center'>{t('layouts.footer.copyright')}</Text>
+                    <Text align='center'>&#169; 2004-{new Date().getFullYear()} {t('layouts.footer.copyright')}</Text>
                     <ButtonGroup spacing='3' variant='outline'>
                         {socialLinks.map((link, index) => (
                             <IconButton
