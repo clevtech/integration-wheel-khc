@@ -10,6 +10,7 @@ import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Analytics from './routes/Analytics';
 import History from './routes/History';
+import Logs from './routes/Logs';
 import Service from './routes/Service';
 import Services from './routes/Services';
 import Settings from './routes/Settings';
@@ -56,6 +57,14 @@ export default function App() {
                                             element={
                                                 <ProtectedRoute>
                                                     <History />
+                                                </ProtectedRoute>
+                                            }
+                                        />
+                                        <Route
+                                            path='/logs'
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Logs />
                                                 </ProtectedRoute>
                                             }
                                         />
