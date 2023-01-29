@@ -56,8 +56,8 @@ export default function Logs() {
               <Thead>
                 <Tr>
                   <Th>Пользователь</Th>
-                  <Th>Дата</Th>
                   <Th>IP адрес</Th>
+                  <Th>Дата</Th>
                   <Th>Действие</Th>
                 </Tr>
               </Thead>
@@ -66,7 +66,7 @@ export default function Logs() {
                   <Tr key={index}>
                     <Td>{elem.user.email}</Td>
                     <Td>{elem.ipAddress}</Td>
-                    <Td>{elem.dateTime}</Td>
+                    <Td>{new Date(elem.dateTime + 'Z').toLocaleString('en-GB')}</Td>
                     <Td>{elem.action}</Td>
                   </Tr>
                 ))}
