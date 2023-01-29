@@ -69,8 +69,6 @@ export default function SignIn() {
             role: decoded?.user.role,
           };
 
-          console.log(userData);
-
           setTokens({ accessToken, refreshToken });
           setUser(userData);
 

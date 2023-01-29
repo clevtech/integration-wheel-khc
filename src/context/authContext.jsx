@@ -49,8 +49,6 @@ const AuthProvider = ({ children }) => {
   const handleRefresh = async () => {
     const response = await authApi.refresh({ refreshToken: tokens.refreshToken });
 
-    console.log(response);
-
     const { data } = response;
 
     const { accessToken, refreshToken } = data;
