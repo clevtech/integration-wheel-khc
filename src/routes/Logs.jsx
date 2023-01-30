@@ -8,25 +8,36 @@ import { useAuth } from '../context/authContext';
 import { actions as actionsApi } from '../services/actions';
 
 export default function Logs() {
-  const { tokens } = useAuth();
   const toast = useToast();
+  const { tokens } = useAuth();
 
-  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [pageData, setPageData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
 
     actionsApi
-      .getAll(tokens.accessToken)
-      .then((response) => {
-        setData(response.data);
-        console.log(response.data);
+      .getAll(tokens.accessToken, currentPage, pageSize)
+      .then((res) => {
+        const { data, pageNumber, totalCount } = res.data;
+
+        const test = {
+          [pageNumber]: data,
+        };
+
+        setPageData({
+          [pageNumber]: data,
+          ...pageData,
+        });
+        setCurrentPage(pageNumber);
+        setTotalCount(totalCount);
       })
-      .catch((error) => {
+      .catch(() => {
         toast({
           title: 'Ошибка',
           description: 'Не удалось загрузить данные',
@@ -41,11 +52,26 @@ export default function Logs() {
       });
   }, []);
 
+  const handlePageChange = (page) => {
+    setIsLoading(true);
+
+    actionsApi.getAll(tokens.accessToken, page, pageSize).then((res) => {
+      const { data, pageNumber, totalCount } = res.data;
+
+      setPageData({
+        [pageNumber]: data,
+        ...pageData,
+      });
+      setCurrentPage(pageNumber);
+      setTotalCount(totalCount);
+    });
+
+    setIsLoading(false);
+  };
+
   const currentPageData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, data]);
+    return pageData[currentPage] || [];
+  }, [currentPage, pageData]);
 
   return (
     <Container maxWidth='container.xl'>
@@ -73,12 +99,14 @@ export default function Logs() {
               </Tbody>
             </Table>
           </TableContainer>
-          <Pagination
-            currentPage={currentPage}
-            totalCount={data.length}
-            pageSize={pageSize}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
+          {totalCount > pageSize && (
+            <Pagination
+              currentPage={currentPage}
+              totalCount={totalCount}
+              pageSize={pageSize}
+              onPageChange={(page) => handlePageChange(page)}
+            />
+          )}
         </>
       ) : (
         <h1>Загрузка...</h1>
