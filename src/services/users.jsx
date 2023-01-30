@@ -37,6 +37,16 @@ const users = {
                 Authorization: `Bearer ${token}`,
             },
         }),
+
+    generate: async (token, data) =>
+        api.request({
+            method: 'POST',
+            url: '/users/generate',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }),
 };
 
 export { users };

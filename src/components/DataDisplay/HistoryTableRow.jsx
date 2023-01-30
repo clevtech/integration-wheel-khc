@@ -20,8 +20,6 @@ import { IoCloseOutline, IoEyeOutline, IoReloadOutline } from 'react-icons/io5';
 export default function HistoryTableRow(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log('htr:', props);
-
   const { id, providerRequestName, managerEmail, startDate, status, totalTime, response, actions } = props;
 
   return (

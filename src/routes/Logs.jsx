@@ -51,18 +51,21 @@ export default function Logs() {
   const handlePageChange = (page) => {
     setIsLoading(true);
 
-    actionsApi.getAll(tokens.accessToken, page, pageSize).then((res) => {
-      const { data, pageNumber, totalCount } = res.data;
+    actionsApi
+      .getAll(tokens.accessToken, page, pageSize)
+      .then((res) => {
+        const { data, pageNumber, totalCount } = res.data;
 
-      setPageData({
-        [pageNumber]: data,
-        ...pageData,
+        setPageData({
+          [pageNumber]: data,
+          ...pageData,
+        });
+        setCurrentPage(pageNumber);
+        setTotalCount(totalCount);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-      setCurrentPage(pageNumber);
-      setTotalCount(totalCount);
-    });
-
-    setIsLoading(false);
   };
 
   const currentPageData = useMemo(() => {
@@ -74,10 +77,10 @@ export default function Logs() {
       {!isLoading ? (
         <>
           <TableContainer>
-            <Table colorScheme='brand.green' variant='simple'>
+            <Table colorScheme='brand.green'>
               <Thead>
                 <Tr>
-                  <Th>Пользователь</Th>
+                  <Th>ИС</Th>
                   <Th>IP адрес</Th>
                   <Th>Дата</Th>
                   <Th>Действие</Th>

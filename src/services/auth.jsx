@@ -24,13 +24,6 @@ const auth = {
             url: '/auth/refresh',
             data: data,
         }),
-
-    register: async (data) =>
-        api.request({
-            method: 'POST',
-            url: '/auth/register',
-            data: data,
-        }),
 };
 
 export { auth };

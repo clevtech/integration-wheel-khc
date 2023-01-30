@@ -72,7 +72,7 @@ export default function Header() {
                 path: '/analytics',
             },
             {
-                label: 'Пользователи',
+                label: 'Информационные системы',
                 path: '/users',
             },
             {

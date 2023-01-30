@@ -1,30 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import {
-  Badge,
-  Button,
-  Container,
-  HStack,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  Table,
-  TableContainer,
-  Tbody,
-  Thead,
-  Td,
-  Th,
-  Tooltip,
-  Tr,
-  useToast,
-} from '@chakra-ui/react';
-import { IoEyeOutline, IoReloadOutline, IoTrashOutline } from 'react-icons/io5';
+import { Container, Table, TableContainer, Tbody, Text, Thead, Td, Th, Tooltip, Tr, useToast } from '@chakra-ui/react';
 
+import HistoryTableRow from '../components/DataDisplay/HistoryTableRow';
 import Pagination from '../components/Layout/Pagination';
 
 import { useAuth } from '../context/authContext';
@@ -35,18 +13,78 @@ export default function History() {
   const { tokens, user } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
 
+  const [pageData, setPageData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const actions = {
+    resend: (id) => {
+      tasksApi
+        .resend(tokens.accessToken, id)
+        .then(() => {
+          toast({
+            title: 'Успех',
+            description: 'Запрос успешно отправлен',
+            status: 'success',
+            colorScheme: 'brand.green',
+            duration: 5000,
+            isClosable: true,
+          });
+        })
+        .catch(() => {
+          toast({
+            title: 'Ошибка',
+            description: 'Не удалось отправить запрос',
+            status: 'error',
+            colorScheme: 'brand.red',
+            duration: 5000,
+            isClosable: true,
+          });
+        });
+    },
+
+    cancel: (id) => {
+      tasksApi
+        .cancel(tokens.accessToken, id)
+        .then(() => {
+          toast({
+            title: 'Успех',
+            description: 'Запрос успешно отменен',
+            status: 'success',
+            colorScheme: 'brand.green',
+            duration: 5000,
+            isClosable: true,
+          });
+        })
+        .catch(() => {
+          toast({
+            title: 'Ошибка',
+            description: 'Не удалось отменить запрос',
+            status: 'error',
+            colorScheme: 'brand.red',
+            duration: 5000,
+            isClosable: true,
+          });
+        });
+    },
+  };
 
   useEffect(() => {
     setIsLoading(true);
 
     tasksApi
-      .getAll(tokens.accessToken)
-      .then((response) => {
-        setData(response.data);
+      .getAll(tokens.accessToken, currentPage, pageSize)
+      .then((res) => {
+        const { data, pageNumber, totalCount } = res.data;
+
+        setPageData({
+          [pageNumber]: data,
+          ...pageData,
+        });
+        setCurrentPage(pageNumber);
+        setTotalCount(totalCount);
       })
       .catch(() => {
         toast({
@@ -63,11 +101,29 @@ export default function History() {
       });
   }, []);
 
+  const handlePageChange = (page) => {
+    setIsLoading(true);
+
+    tasksApi
+      .getAll(tokens.accessToken, page, pageSize)
+      .then((res) => {
+        const { data, pageNumber, totalCount } = res.data;
+
+        setPageData({
+          [pageNumber]: data,
+          ...pageData,
+        });
+        setCurrentPage(pageNumber);
+        setTotalCount(totalCount);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   const currentPageData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, data]);
+    return pageData[currentPage] || [];
+  }, [currentPage, pageData]);
 
   return (
     <Container maxWidth='container.xl'>
@@ -78,7 +134,7 @@ export default function History() {
               <Thead>
                 <Tr>
                   <Th>Название услуги</Th>
-                  <Th>E-mail</Th>
+                  <Th>ИС</Th>
                   <Th>Дата</Th>
                   <Th>Статус</Th>
                   <Th>Время обработки</Th>
@@ -86,64 +142,17 @@ export default function History() {
                 </Tr>
               </Thead>
               <Tbody>
-                {currentPageData.map((task, index) => (
-                  <Tr key={index}>
-                    <Td>{task.providerRequestName}</Td>
-                    <Td>{task.userEmail}</Td>
-                    <Td>{task.requestDate}</Td>
-                    <Td>
-                      <Badge
-                        colorScheme={
-                          task.requestStatus === 'COMPLETED'
-                            ? 'brand.green'
-                            : task.requestStatus === 'PENDING'
-                            ? 'brand.yellow'
-                            : 'brand.red'
-                        }
-                      >
-                        {task.requestStatus}
-                      </Badge>
-                    </Td>
-                    <Td>{task.responseTime / 1000} с</Td>
-                    {user.role === 'ADMIN' && (
-                      <Td>
-                        <HStack>
-                          <Popover>
-                            <PopoverTrigger>
-                              <Button colorScheme='brand.green'>
-                                <Tooltip label='Повторить запрос' aria-label='Повторить запрос'>
-                                  <IoEyeOutline />
-                                </Tooltip>
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                              <PopoverArrow />
-                              <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
-                            </PopoverContent>
-                          </Popover>
-                          <Tooltip label='Повторить запрос' aria-label='Повторить запрос'>
-                            <Button colorScheme='brand.yellow'>
-                              <IoReloadOutline />
-                            </Button>
-                          </Tooltip>
-                          <Tooltip label='Удалить запрос' aria-label='Повторить запрос'>
-                            <Button colorScheme='brand.red'>
-                              <IoTrashOutline />
-                            </Button>
-                          </Tooltip>
-                        </HStack>
-                      </Td>
-                    )}
-                  </Tr>
+                {currentPageData.map((elem, index) => (
+                  <HistoryTableRow key={index} {...elem} actions={actions} />
                 ))}
               </Tbody>
             </Table>
           </TableContainer>
           <Pagination
             currentPage={currentPage}
-            totalCount={data.length}
+            totalCount={totalCount}
             pageSize={pageSize}
-            onPageChange={(page) => setCurrentPage(page)}
+            onPageChange={(page) => handlePageChange(page)}
           />
         </>
       ) : (
