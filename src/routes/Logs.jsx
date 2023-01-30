@@ -26,10 +26,6 @@ export default function Logs() {
       .then((res) => {
         const { data, pageNumber, totalCount } = res.data;
 
-        const test = {
-          [pageNumber]: data,
-        };
-
         setPageData({
           [pageNumber]: data,
           ...pageData,
